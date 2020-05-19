@@ -31,7 +31,7 @@ app.use("/user", user);
 app.use("/reservations", reservations);
 
 //port
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4999;
 
 //start server
 app.listen(PORT, console.log(`server started at ${PORT}`));
