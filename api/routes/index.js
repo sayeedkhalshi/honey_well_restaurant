@@ -5,4 +5,8 @@ router.get("/", (req, res) => {
     res.render("index");
 });
 
+router.get("/fullname", (req, res) => {
+    res.render("fullname");
+});
+
 module.exports = router;

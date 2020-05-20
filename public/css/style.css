@@ -1,0 +1,121 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "kanit";
+}
+
+header {
+    text-align: center;
+}
+.navbar-nav {
+    display: flex;
+    list-style: none;
+}
+
+.navbar-nav > a {
+    background-color: #401d16;
+    padding: 30px;
+    box-shadow: 1px 1px 12px #1c110e;
+    font-family: kanit;
+    text-align: center;
+    transition: all 0.3s ease-in-out 0s;
+    width: 20%;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #f2e1ae;
+}
+
+.navbar-nav > a:hover {
+    background-color: #f8c17f;
+    color: #402525;
+}
+
+/* slider box on index page */
+.slider-box {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    background-color: #f29829;
+    justify-content: center;
+    align-content: center;
+}
+.info-box {
+    text-align: center;
+    padding: 100px;
+}
+.reservation-btn {
+    background: rgba(255, 255, 255, 0.4);
+    border: 0;
+    padding: 20px;
+    color: #208c30;
+    font-weight: bold;
+    font-size: 2em;
+    cursor: pointer;
+    border-radius: 50px;
+    box-shadow: 2px 2px;
+}
+.dis-text {
+    font-size: 2em;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 2px;
+    margin: 10px;
+}
+.dis-text:nth-child(2) {
+    background: rgba(255, 255, 255, 0.8);
+}
+.dis-text:nth-child(3) {
+    background: rgba(255, 255, 255, 0.8);
+}
+#offer1 {
+    color: #1c2c40;
+}
+#offer2 {
+    color: #d94b2b;
+    font-size: 2.2em;
+}
+
+#offer3 {
+    color: #bf3124;
+}
+
+#offer4 {
+    color: #731212;
+}
+#offer5 {
+    color: #1cbdab;
+}
+#offer6 {
+    color: #632857;
+}
+#offer7 {
+    color: #d81d41;
+}
+#offer8 {
+    color: #ff501e;
+}
+#offer9 {
+    color: #f62527;
+}
+#offer10 {
+    color: #ffa92c;
+}
+#offer11 {
+    color: #004b81;
+}
+#offer12 {
+    color: #00c6ac;
+}
+#map {
+    color: #a6401b;
+    padding: 20px;
+    text-decoration: underline;
+    margin: 5px;
+}
+#call-now {
+    padding: 20px;
+    color: #fff;
+    border-bottom: 2px dotted;
+    margin: 0px 0 30px;
+}
