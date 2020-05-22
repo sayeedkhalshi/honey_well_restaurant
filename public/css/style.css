@@ -119,3 +119,13 @@ header {
     border-bottom: 2px dotted;
     margin: 0px 0 30px;
 }
+
+#reservation-form {
+    text-align: center;
+    padding: 50px;
+}
+input[type="checkbox"] {
+    background-color: #a6401b;
+    padding: 5px;
+    color: brown;
+}
