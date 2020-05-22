@@ -1,8 +1,15 @@
 const express = require("express");
 const app = express();
+const passport = require("passport");
 const session = require("express-session");
 const expressLayouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
+
+//load passport config
+require("./config/passport")(passport);
+
+//body parser
+app.use(express.urlencoded({ extended: false }));
 
 //load routes
 const index = require("./api/routes/index");
@@ -24,6 +31,25 @@ app.use(express.static(__dirname + "/public"));
 //set view
 app.use(expressLayouts);
 app.set("view engine", "ejs");
+
+// Express session
+app.use(
+    session({
+        secret: "secret",
+        resave: true,
+        saveUninitialized: true,
+    })
+);
+
+//passport config
+app.use(passport.initialize());
+app.use(passport.session());
+
+//isAuthenticated for views
+app.use(function (req, res, next) {
+    res.locals.isAuthenticated = req.isAuthenticated();
+    next();
+});
 
 //routes
 app.use("/", index);
