@@ -5,8 +5,8 @@ router.get("/", (req, res) => {
     res.render("index", { layout: "layout" });
 });
 
-router.get("/fullname", (req, res) => {
-    res.render("fullname");
+router.get("/hwr", (req, res) => {
+    res.render("hwr");
 });
 
 module.exports = router;

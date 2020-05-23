@@ -10,7 +10,7 @@ const TableSchema = new Schema({
         type: String,
         required: true,
     },
-    tablesize: {
+    tableperson: {
         type: String,
         required: true,
     },
@@ -21,6 +21,10 @@ const TableSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         required: true,
+    },
+    date: {
+        type: Date,
+        default: Date.now,
     },
 });
 module.exports = Table = new mongoose.model("tables", TableSchema);

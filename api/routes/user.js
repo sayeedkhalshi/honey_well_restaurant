@@ -11,6 +11,11 @@ const {
 //load User model
 const User = require("../../models/User");
 
+//GET Private dashboard
+router.get("/dashboard", ensureAuthenticated, (req, res) =>
+    res.render("dashboard")
+);
+
 //GET public login
 router.get("/login", forwardAuthenticated, (req, res) => res.render("login"));
 
@@ -27,9 +32,7 @@ router.get("/register", forwardAuthenticated, (req, res) =>
 //POST Register Public
 router.post("/register", (req, res) => {
     const errors = [];
-    User.findOne(
-        { email: req.body.email } || { username: req.body.username }
-    ).then((user) => {
+    User.findOne({ email: req.body.email }).then((user) => {
         if (user) {
             errors.push({
                 msg: "Username Or Email Already Exist. Try Login instead",
@@ -49,7 +52,7 @@ router.post("/register", (req, res) => {
                         newUser
                             .save()
                             .then((user) => {
-                                res.redirect("/login");
+                                res.redirect("/user/login");
                             })
                             .catch((err) => {
                                 res.status(400);

@@ -19,19 +19,9 @@ const UserSchema = new Schema({
     password: {
         type: String,
     },
-    role: [
-        {
-            admin: {
-                type: Boolean,
-            },
-            employee: {
-                type: Boolean,
-            },
-            customer: {
-                type: Boolean,
-            },
-        },
-    ],
+    role: {
+        type: String,
+    },
     addedby: {
         type: Schema.Types.ObjectId,
     },

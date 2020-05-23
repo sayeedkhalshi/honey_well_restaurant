@@ -3,8 +3,13 @@
     <ul class="nav navbar-nav">
         <a class="page-scroll" href="/"><li>Home</li></a>
         <a class="page-scroll" href="/admin"><li>Temp: Admin</li></a>
-        <a class="page-scroll" href="/"><li>History of HWR</li></a>
+        <a class="page-scroll" href="/hwr"><li>History of HWR</li></a>
+        <% if (isAuthenticated) { %>
+        <a class="page-scroll" href="/user/logout"><li>Logout</li></a>
+        <a class="page-scroll" href="/user/Dashboard"><li>Dashboard</li></a>
+        <%}else{ %>
         <a class="page-scroll" href="/user/login"><li>Login</li></a>
         <a class="page-scroll" href="/user/register"><li>Register</li></a>
+        <% } %>
     </ul>
 </header>
