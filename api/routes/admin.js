@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 
 router.get("/", (req, res) =>
-    res.render("admin/dashboard", { layout: "layoutsB" })
+    res.render("admin/dashboard", { layout: "layoutAdmin" })
 );
 router.get("/users", (req, res) => res.render("admin/users-admin-panel"));
 router.get("/table", (req, res) => res.render("admin/table-admin"));
