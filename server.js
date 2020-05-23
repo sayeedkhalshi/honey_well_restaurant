@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 const index = require("./api/routes/index");
 const user = require("./api/routes/user");
 const reservations = require("./api/routes/reservations");
+const admin = require("./api/routes/admin");
 
 //db config
 db = require("./config/keys").mongoURI;
@@ -31,6 +32,7 @@ app.use(express.static(__dirname + "/public"));
 //set view
 app.use(expressLayouts);
 app.set("view engine", "ejs");
+app.set("layout", "layoutAdmin");
 
 // Express session
 app.use(
@@ -55,6 +57,7 @@ app.use(function (req, res, next) {
 app.use("/", index);
 app.use("/user", user);
 app.use("/reservations", reservations);
+app.use("/admin", admin);
 
 //port
 const PORT = process.env.PORT || 4999;

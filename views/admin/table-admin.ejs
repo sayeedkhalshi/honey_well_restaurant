@@ -1,0 +1,46 @@
+<%- include("./partials/header") %>
+<div class="table-admin">
+    <div class="new-table-form">
+        <h2>Add new table</h2>
+        <form id="new-table-form" action="/admin/new-table" method="POST">
+            <input
+                type="text"
+                id="ad-table-number"
+                name="table-number"
+                placeholder="table-number"
+            />
+
+            <input
+                type="text"
+                id="ad-table-name"
+                name="table-name"
+                placeholder="table-name"
+            />
+
+            <input
+                type="text"
+                id="ad-table-person"
+                name="table-person"
+                placeholder="table-person"
+            />
+            <br />
+            <label for="ad-table-size">Choose a car:</label>
+            <select id="ad-table-size" name="carlist" form="carform">
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+            </select>
+            <br />
+            <label for="ad-table-img">Choose a image for the table:</label>
+            <input id="ad-table-img" type="file" value="upload a image" />
+        </form>
+    </div>
+
+    <div class="table-list">
+        <ul>
+            <li>1 - Ruby Pocobolo - M - 5</li>
+            <li>2 - Ruby Pocobolo - M - 5</li>
+            <li>3 - Ruby Pocobolo - M - 5</li>
+        </ul>
+    </div>
+</div>

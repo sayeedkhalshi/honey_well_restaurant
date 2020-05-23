@@ -18,12 +18,6 @@ router.get("/login", forwardAuthenticated, (req, res) => res.render("login"));
 router.get("/register", forwardAuthenticated, (req, res) =>
     res.render("register")
 );
-router.get("/admin", (req, res) => {
-    res.render("admin");
-});
-router.get("/admin/offers", (req, res) => {
-    res.render("offers");
-});
 
 //GET public register
 router.get("/register", forwardAuthenticated, (req, res) =>
