@@ -2,7 +2,12 @@
 <div class="table-admin">
     <div class="new-table-form">
         <h2>Add new table</h2>
-        <form id="new-table-form" action="/admin/new-table" method="POST">
+        <form
+            id="new-table-form"
+            action="/admin/new-table"
+            method="POST"
+            enctype="multipart/form-data"
+        >
             <input
                 type="text"
                 id="ad-table-number"
@@ -26,21 +31,24 @@
 
             <br />
             <label for="ad-table-img">Choose a image for the table:</label>
-            <input
-                id="ad-table-img"
-                name="tableimg"
-                type="file"
-                value="upload a image"
-            />
+            <input id="ad-table-img" name="tableimg" type="file" />
             <input type="submit" value="Create New Table" />
         </form>
     </div>
 
     <div class="table-list">
         <ul>
-            <li>1 - Ruby Pocobolo - M - 5</li>
-            <li>2 - Ruby Pocobolo - M - 5</li>
-            <li>3 - Ruby Pocobolo - M - 5</li>
+            <% if(typeof tables != 'undefined'){ %> 
+                <% tables.forEach((table) => { %>
+                    
+                    <%= table.id %>
+                        <h2>Table Name: <%= table.tablename %></h2>
+                    </a>
+                    <h3>Table Number: <%= table.tablenumber %></h3>
+                    <p>Maximum Person: <%= table.tableperson %></p>
+                    <p>Table image:</p> <img src="/<%= table.tableimg %>" width="200">
+                <% }) %> 
+            <% } %>
         </ul>
     </div>
 </div>

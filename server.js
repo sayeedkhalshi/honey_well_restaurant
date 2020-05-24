@@ -10,6 +10,7 @@ require("./config/passport")(passport);
 
 //body parser
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 //load routes
 const index = require("./api/routes/index");
