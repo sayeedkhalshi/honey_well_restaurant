@@ -10,5 +10,9 @@ const HoursSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true,
     },
+    date: {
+        type: Date,
+        default: Date.now,
+    },
 });
 module.exports = Hour = new mongoose.model("hours", HoursSchema);

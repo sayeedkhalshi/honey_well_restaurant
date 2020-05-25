@@ -1,27 +1,4 @@
 window.onload = function () {
-    var i = 0; // Start Point
-    var images = []; // Images Array
-    var time = 3000; // Time Between Switch
-
-    // Change Image
-    function changeImg() {
-        document.slide.src = images[i];
-
-        // Check If Index Is Under Max
-        if (i < images.length - 1) {
-            // Add 1 to Index
-            i++;
-        } else {
-            // Reset Back To O
-            i = 0;
-        }
-
-        // Run function every x seconds
-        setTimeout("changeImg()", time);
-    }
-
-    changeImg();
-
     document.getElementById("edit").addEventListener("click", loadName);
 
     function loadName(e) {

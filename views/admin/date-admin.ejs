@@ -1,1 +1,23 @@
 <%- include("./partials/header") %>
+<div class="date-admin">
+    <form method="POST" action="/admin/date">
+        <input type="date" name="opendate" />
+        <input
+            type="submit"
+            value="add a date you want to accept reservation"
+        />
+
+        <p>Today is</p>
+        <%= opendate %>
+
+        <ul>
+            <% if(typeof reserveddates != 'undefined'){ %> 
+                <% reserveddates.forEach((reserveddate) => { %>
+
+                    <p><%= reserveddates.opendate %></p>
+
+                <% }) %> 
+            <% } %>
+        </ul>
+    </form>
+</div>
