@@ -84,6 +84,9 @@
             <% }) %> 
         <% } %>
 
+        <input type="text" name="name" value="<%= typeof name != 'undefined' ? name : ''%>">
+        <input type="email" name="email" value="<%= typeof email != 'undefined' ? email : ''%>">
+        <input type="text" name="phone" value="<%= typeof phone != 'undefined' ? phone : ''%>">
         <input type="submit" value="Submit Resrvation" />
     </form>
 </div>

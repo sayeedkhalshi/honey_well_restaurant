@@ -39,9 +39,30 @@ const ReservationSchema = new Schema({
         type: String,
         required: true,
     },
+    pendingby: {
+        type: Schema.Types.ObjectId,
+    },
+    specialby: {
+        type: Schema.Types.ObjectId,
+    },
+    haltby: {
+        type: Schema.Types.ObjectId,
+    },
+    cancelledby: {
+        type: Schema.Types.ObjectId,
+    },
+    servedby: {
+        type: Schema.Types.ObjectId,
+    },
+    confirmedby: {
+        type: Schema.Types.ObjectId,
+    },
     comment: {
         type: String,
-        required: true,
+    },
+    date: {
+        type: Date,
+        default: Date.now,
     },
 });
 
