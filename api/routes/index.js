@@ -11,26 +11,6 @@ router.get("/", (req, res) => {
             Hour.find().then((hours) => {
                 Table.find()
                     .then((tables) => {
-                        //start disabled algoritms
-                        Reservation.findOne({
-                            reserveddate: req.body.reserveddate,
-                        }).then((reserveddates) => {
-                            const hourCount = 0;
-                            if (hours != "undefined") {
-                                hours.forEach((hour) => {
-                                    hourCount += 1;
-                                });
-                            }
-                            const tableCount = 0;
-                            if (tables != "undefined") {
-                                tables.forEach((table) => {
-                                    tableCount += 1;
-                                });
-                            }
-                        });
-
-                        //end disbled algorithms
-
                         if (req.user) {
                             const name = req.user.name;
                             const email = req.user.email;
