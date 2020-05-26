@@ -31,31 +31,59 @@
 
 <div class="reservation">
     <form id="reservation-form" method="POST" action="/reservations">
-        Select any amount of table you want to book <br />
-        <label for="table">Table 1</label>
-        <input type="checkbox" name="table" />
-        <label for="table">Table 2</label>
-        <input type="checkbox" name="table" />
-        <label for="table">Table 3</label>
-        <input type="checkbox" name="table" />
-        <label for="table">Table 4</label>
-        <input type="checkbox" name="table" />
+        <select name="reserveddate">
 
-        <br />
-        Select date
-        <input type="date" />
+            <% if(typeof reserveddates != 'undefined'){ %> 
+                <% reserveddates.forEach((reserveddate) => { %>
+                    <% const reserveddate_array = reserveddate.opendate.split("-") %>
+                    <% const year = reserveddate_array[0] %>
+                    <% const month = reserveddate_array[1] %>
+                    <% const day = reserveddate_array[2] %>
+                    <% const dateboolean = (year < d.getFullYear()) || (year == d.getFullYear() && month < (d.getMonth() + 1)) || (year == d.getFullYear() && month == (d.getMonth() +1) && day < d.getDate()) %>
+                    <% if (!dateboolean){ %>
+                        
+                        <option value="<%= reserveddate.opendate %>"><%= reserveddate.opendate %></option>
+                    <% } %>
+                     
+                <% }) %> 
+            <% } %>
 
-        <br />
-        select hours
-        <label for="table">1am - 2am</label>
-        <input type="checkbox" name="hours" />
-        <label for="table">2am - 3am</label>
-        <input type="checkbox" name="hours" />
-        <label for="table">3am - 4am</label>
-        <input type="checkbox" name="hours" />
-        <label for="table">4am - 5am</label>
-        <input type="checkbox" name="hours" />
-        <label for="table">5am - 6am</label>
-        <input type="checkbox" name="hours" />
+            
+        </select>
+
+        <!--Hours-->
+        <% if(typeof hours != 'undefined'){ %> 
+            <% hours.forEach((hour) => { %>
+                
+                <br>
+                <label for="hours-checkbox"><%= hour.openhour %></label>
+                <input type="checkbox" value="<%= hour.openhour %>">
+                <br>
+                    
+                
+            <% }) %> 
+        <% } %>
+
+        <!--Table-->
+        <% if(typeof tables != 'undefined'){ %> 
+            <% tables.forEach((table) => { %>
+
+                <br>
+                <br>
+                <label>Table Number: <%= table.tablenumber %></label>
+                <input type="checkbox" value="<%= table.tablenumber %>">
+                <br>
+                <!--
+                <%= table.id %>
+                    <h2>Table Name: <%= table.tablename %></h2>
+                </a>
+                <h3>Table Number: <%= table.tablenumber %></h3>
+                <p>Maximum Person: <%= table.tableperson %></p>
+                <p>Table image:</p> <img src="/<%= table.tableimg %>" width="200">
+                -->
+            <% }) %> 
+        <% } %>
+
+        <input type="submit" value="Submit Resrvation" />
     </form>
 </div>

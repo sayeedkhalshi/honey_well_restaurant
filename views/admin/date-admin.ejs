@@ -7,17 +7,50 @@
             value="add a date you want to accept reservation"
         />
 
-        <p>Today is</p>
-        <%= opendate %>
+
+    </form>
+
+
+    <div class="accepting-dates">
+        <h2>Accepting Dates</h2>
+        
 
         <ul>
             <% if(typeof reserveddates != 'undefined'){ %> 
                 <% reserveddates.forEach((reserveddate) => { %>
-
-                    <p><%= reserveddates.opendate %></p>
-
+                    <% const reserveddate_array = reserveddate.opendate.split("-") %>
+                    <% const year = reserveddate_array[0] %>
+                    <% const month = reserveddate_array[1] %>
+                    <% const day = reserveddate_array[2] %>
+                    <% const dateboolean = (year < d.getFullYear()) || (year == d.getFullYear() && month < (d.getMonth() + 1)) || (year == d.getFullYear() && month == (d.getMonth() +1) && day < d.getDate()) %>
+                    <% if (!dateboolean){ %>
+                        
+                        <p><%= reserveddate.opendate %></p>
+                    <% } %>
+                     
                 <% }) %> 
             <% } %>
         </ul>
-    </form>
+    </div>
+    <div class="past-accepting-dates">
+        <h2>Past Dates</h2>
+        <ul>
+            <% if(typeof reserveddates != 'undefined'){ %> 
+                <% reserveddates.forEach((reserveddate) => { %>
+                    <% const reserveddate_array = reserveddate.opendate.split("-") %>
+                    <% const year = reserveddate_array[0] %>
+                    <% const month = reserveddate_array[1] %>
+                    <% const day = reserveddate_array[2] %>
+                    <% const dateboolean = (year < d.getFullYear()) || (year == d.getFullYear() && month < (d.getMonth() + 1)) || (year == d.getFullYear() && month == (d.getMonth() +1) && day < d.getDate()) %>
+                    
+                     
+                    <% if(dateboolean){ %>
+                        
+                        <p><%= reserveddate.opendate %></p>
+                    <% } %>
+                <% }) %> 
+            <% } %>
+        </ul>
+    </div>
+
 </div>

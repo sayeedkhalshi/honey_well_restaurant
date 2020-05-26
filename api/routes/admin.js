@@ -40,12 +40,10 @@ router.get("/date", ensureAuthenticated, (req, res) => {
             ReservedDate.find()
                 .then((reserveddates) => {
                     const d = new Date();
-                    const opendate = d.getDate();
-                    const openmonth = d.getMonth();
+
                     res.render("admin/date-admin", {
-                        opendate,
-                        openmonth,
                         reserveddates,
+                        d,
                     });
                 })
                 .catch((err) => res.json({ msg: err }));
@@ -71,7 +69,7 @@ router.post("/date", ensureAuthenticated, (req, res) => {
                     });
                     NewReservedDate.save()
                         .then((reserveddate) => {
-                            res.redirect("/admin/date");
+                            res.json({ msg: reserveddate });
                         })
                         .catch((err) => {
                             res.json({ msg: err });
