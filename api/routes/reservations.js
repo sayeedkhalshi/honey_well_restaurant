@@ -6,7 +6,6 @@ const Reservation = require("../../models/Reservation");
 const Table = require("../../models/Table");
 const ReservedDate = require("../../models/ReservedDate");
 const Hour = require("../../models/Hour");
-const Combination = require("../../models/Combination");
 
 router.get("/", (req, res) => {
     res.render("reservation");
