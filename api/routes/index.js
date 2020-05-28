@@ -8,26 +8,10 @@ router.get("/", (req, res) => {
     ReservedDate.find()
         .then((reserveddates) => {
             const d = new Date();
-            Hour.find().then((hours) => {
-                Table.find()
-                    .then((tables) => {
-                        if (req.user) {
-                            const name = req.user.name;
-                            const email = req.user.email;
-                            const phone = req.user.phone;
-
-                            res.render("index", {
-                                layout: "layout",
-                                reserveddates,
-                                d,
-                                hours,
-                                tables,
-                                name,
-                                email,
-                                phone,
-                            });
-                        }
-                        if (!req.user) {
+            Hour.find()
+                .then((hours) => {
+                    Table.find()
+                        .then((tables) => {
                             res.render("index", {
                                 layout: "layout",
                                 reserveddates,
@@ -35,10 +19,10 @@ router.get("/", (req, res) => {
                                 hours,
                                 tables,
                             });
-                        }
-                    })
-                    .catch((err) => console.log(err));
-            });
+                        })
+                        .catch((err) => console.log(err));
+                })
+                .catch((err) => console.log(err));
         })
         .catch((err) => res.json({ msg: err }));
 });

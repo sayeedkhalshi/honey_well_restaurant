@@ -2,23 +2,22 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ReservationSchema = new Schema({
+    combination: {
+        type: String,
+        required: true,
+    },
     user: {
+        type: Schema.Types.ObjectId,
+    },
+    reserveddate: {
         type: Schema.Types.ObjectId,
         required: true,
     },
-    reserveddate: {
-        type: String,
-        required: true,
-    },
     reservedhour: {
-        type: String,
+        type: Schema.Types.ObjectId,
         required: true,
     },
     reservedtable: {
-        type: String,
-        required: true,
-    },
-    reservedby: {
         type: Schema.Types.ObjectId,
         required: true,
     },

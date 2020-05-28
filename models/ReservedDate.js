@@ -11,6 +11,11 @@ const DateSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true,
     },
+
+    date: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
 module.exports = ReservedDate = new mongoose.model("reserveddates", DateSchema);
