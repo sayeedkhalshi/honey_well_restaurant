@@ -14,6 +14,7 @@ const User = require("../../models/User");
 const Table = require("../../models/Table");
 const Hour = require("../../models/Hour");
 const ReservedDate = require("../../models/ReservedDate");
+const Reservation = require("../../models/Reservation");
 
 router.get("/", ensureAuthenticated, (req, res) => {
     if (req.user) {
@@ -56,6 +57,71 @@ router.get("/date", ensureAuthenticated, (req, res) => {
 router.post("/date", ensureAuthenticated, (req, res) => {
     User.findOne({ email: req.user.email }).then((user) => {
         if (user.role === "admin" || user.role === "employee") {
+            //mark time as past in ReservedDate model
+            ReservedDate.find({ time: "future" }).then((reserveddates) => {
+                reserveddates.forEach((reserveddate) => {
+                    const d = new Date();
+
+                    const reserveddate_array = reserveddate.opendate.split("-");
+                    const year = reserveddate_array[0];
+                    const month = reserveddate_array[1];
+                    const day = reserveddate_array[2];
+                    const dateboolean =
+                        year < d.getFullYear() ||
+                        (year == d.getFullYear() && month < d.getMonth() + 1) ||
+                        (year == d.getFullYear() &&
+                            month == d.getMonth() + 1 &&
+                            day < d.getDate());
+
+                    if (dateboolean) {
+                        ReservedDate.findByIdAndUpdate(
+                            reserveddate.id,
+                            { time: "past" },
+                            { new: true }
+                        )
+                            .then((reserveddate) => {
+                                console.log(reserveddate + " updated");
+                            })
+                            .catch((err) => console.log(err));
+                    }
+                });
+            });
+
+            //mark time as past in Reservation model
+            Reservation.find({ time: "future" }).then((reservations) => {
+                if (reservations) {
+                    reservations.forEach((reservation) => {
+                        const d = new Date();
+                        const combination = reservation.combination.split(" ");
+                        const dateCombination = combination[0].split("-");
+
+                        const year = dateCombination[0];
+                        const month = dateCombination[1];
+                        const day = dateCombination[2];
+                        const dateboolean =
+                            year < d.getFullYear() ||
+                            (year == d.getFullYear() &&
+                                month < d.getMonth() + 1) ||
+                            (year == d.getFullYear() &&
+                                month == d.getMonth() + 1 &&
+                                day < d.getDate());
+
+                        if (dateboolean) {
+                            Reservation.findByIdAndUpdate(
+                                reservation.id,
+                                { time: "past" },
+                                { new: true }
+                            )
+                                .then((reservations) => {
+                                    console.log(reservations + " updated");
+                                })
+                                .catch((err) => console.log(err));
+                        }
+                    });
+                }
+            });
+
+            //create new date
             ReservedDate.findOne({
                 opendate: req.body.opendate,
             }).then((reserveddate) => {

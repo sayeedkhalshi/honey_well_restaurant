@@ -6,6 +6,10 @@ const DateSchema = new Schema({
         type: String,
         required: true,
     },
+    time: {
+        type: String,
+        default: "future",
+    },
 
     user: {
         type: Schema.Types.ObjectId,

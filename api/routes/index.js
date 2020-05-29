@@ -5,20 +5,25 @@ const router = express.Router();
 
 router.get("/", (req, res) => {
     //reservation data push
-    ReservedDate.find()
+    ReservedDate.find({ time: "future" })
         .then((reserveddates) => {
             const d = new Date();
             Hour.find()
                 .then((hours) => {
                     Table.find()
                         .then((tables) => {
-                            res.render("index", {
-                                layout: "layout",
-                                reserveddates,
-                                d,
-                                hours,
-                                tables,
-                            });
+                            Reservation.find({ time: "future" }).then(
+                                (reservations) => {
+                                    res.render("index", {
+                                        layout: "layout",
+                                        reserveddates,
+                                        d,
+                                        hours,
+                                        tables,
+                                        reservations,
+                                    });
+                                }
+                            );
                         })
                         .catch((err) => console.log(err));
                 })

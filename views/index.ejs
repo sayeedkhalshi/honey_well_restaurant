@@ -85,6 +85,13 @@
                 
             <% }) %> 
         <% } %>
+        
+        <!--Reservations-->
+        <% if(typeof reservations != 'undefined'){ %> 
+            <% reservations.forEach((reservation) => { %>
+                <p><%= reservation.email %></p>
+        <% }) %> 
+        <% } %>
 
         <input type="text" name="name" >
         <input type="email" name="email" >
