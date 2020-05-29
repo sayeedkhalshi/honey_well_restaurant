@@ -129,17 +129,35 @@ router.post("/date", ensureAuthenticated, (req, res) => {
                     res.json({ msg: "Date already exists" });
                 }
                 if (!reserveddate) {
-                    const NewReservedDate = new ReservedDate({
-                        opendate: req.body.opendate,
-                        user: req.user.id,
-                    });
-                    NewReservedDate.save()
-                        .then((reserveddate) => {
-                            res.json({ msg: reserveddate });
-                        })
-                        .catch((err) => {
-                            res.json({ msg: err });
+                    const d = new Date();
+                    const reserveddate_array = req.body.opendate.split(" ");
+
+                    const year = reserveddate_array[0];
+                    const month = reserveddate_array[1];
+                    const day = reserveddate_array[2];
+                    const dateboolean =
+                        year < d.getFullYear() ||
+                        (year == d.getFullYear() && month < d.getMonth() + 1) ||
+                        (year == d.getFullYear() &&
+                            month == d.getMonth() + 1 &&
+                            day < d.getDate());
+
+                    if (dateboolean) {
+                        res.json({ msg: "You can't have a day in the past" });
+                    }
+                    if (!dateboolean) {
+                        const NewReservedDate = new ReservedDate({
+                            opendate: req.body.opendate,
+                            user: req.user.id,
                         });
+                        NewReservedDate.save()
+                            .then((reserveddate) => {
+                                res.json({ msg: reserveddate });
+                            })
+                            .catch((err) => {
+                                res.json({ msg: err });
+                            });
+                    }
                 }
             });
         }

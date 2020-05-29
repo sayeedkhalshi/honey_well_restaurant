@@ -1,4 +1,12 @@
 window.onload = function () {
+    //admin section starts
+
+    var today = new Date().toISOString().split("T")[0];
+    document.getElementsByName("opendate")[0].setAttribute("min", today);
+
+    //admin section ends
+
+    /*
     document.getElementById("edit").addEventListener("click", loadName);
 
     function loadName(e) {
@@ -20,7 +28,7 @@ window.onload = function () {
 
                 oldName.innerHTML = pageData.innerHTML;
 
-                /*
+                
                 window.history.pushState(
                     { html: htmlDoc.html, pageTitle: document.title },
                     "",
@@ -35,7 +43,7 @@ window.onload = function () {
                         document.title = e.state.pageTitle;
                     }
                 };
-                */
+                
             }
             console.log("Done");
         };
@@ -52,4 +60,5 @@ window.onload = function () {
 
         xhr.send();
     }
+    */
 };
