@@ -33,69 +33,101 @@
 
 <div class="reservation">
 
-    <% if(typeof reservation_done != 'undefined'){ %> 
-        <% reservation_done.forEach((reservation) => { %>
-            <p><%= reservation %></p>
+    <!--Reservations for front end-->
+    <% if(typeof reservations != 'undefined'){ %> 
+        <% reservations.forEach((reservation) => { %>
+            <p class="reservations-future" style="display: none;"><%= reservation.combination %></p>
         <%}) %>
     <%} %>
+    <!--Dates for front end-->
+    <% if(typeof reserveddates != 'undefined'){ %> 
+        <% reserveddates.forEach((reserveddate) => { %>     
+                
+            <p class="date-future" style="display: none;"><%= reserveddate.opendate %></p>
+                        
+        <% }) %> 
+    <% } %>
+    <!--Hour for front end-->
+    <% if(typeof hours != 'undefined'){ %> 
+        <% hours.forEach((hour) => { %>
+            
+            <p class="hour-future" style="display: none;"><%= hour.openhour %></p>
+                   
+        <% }) %> 
+    <% } %>
+
+    <!--table for front end-->
+    <% if(typeof tables != 'undefined'){ %> 
+        <% tables.forEach((table) => { %>
+
+            <p class="hour-future" style="display: none;"><%= table.tablenumber %></p>
+ 
+        <% }) %> 
+    <% } %>
+    <!--end codes for front end-->
 
     <form id="reservation-form" method="POST" action="/reservations">
-        <select name="reserveddate">
 
+        
+        <select id="reserveddate" name="reserveddate">
+            <option selected disabled>Pick A Date:</option>
             <% if(typeof reserveddates != 'undefined'){ %> 
-                <% reserveddates.forEach((reserveddate2) => { %>
-                    <% const reserveddate_array = reserveddate2.opendate.split("-") %>
-                    <% const year = reserveddate_array[0] %>
-                    <% const month = reserveddate_array[1] %>
-                    <% const day = reserveddate_array[2] %>
-                    <% const dateboolean = (year < d.getFullYear()) || (year == d.getFullYear() && month < (d.getMonth() + 1)) || (year == d.getFullYear() && month == (d.getMonth() +1) && day < d.getDate()) %>
-                    <% if (!dateboolean){ %>
+                <% reserveddates.forEach((reserveddate) => { %>
+                   
                         
-                        <option value="<%= reserveddate2.id + ' ' + reserveddate2.opendate %>"><%= reserveddate2.opendate %></option>
-                    <% } %>
+                        <option value="<%= reserveddate.id + ' ' + reserveddate.opendate %>"><%= reserveddate.opendate %></option>
+                    
                      
                 <% }) %> 
             <% } %>
 
             
         </select>
-
+        <br>
         <!--Hours-->
+        
         <% if(typeof hours != 'undefined'){ %> 
+            
+            <select id="reservedtable" name="reservedhour">
+            <option selected disabled>Pick A Hour too:</option>
             <% hours.forEach((hour) => { %>
                 
-                <br>
-                <label for="hours-checkbox"><%= hour.openhour %></label>
-                <input name="reservedhour" type="checkbox" value="<%= hour.id + ' ' +hour.openhour %>">
-                <br>
+                
+                
+                <option value="<%= hour.id + ' ' +hour.openhour %>"><%= hour.openhour %></option>
+                
                     
                 
             <% }) %> 
+        </select>
+        <br>
         <% } %>
 
         <!--Table-->
+
+      
         <% if(typeof tables != 'undefined'){ %> 
+            <select name="reservedtable" required>
+                <option selected disabled >And A Table too:</option>
+
             <% tables.forEach((table) => { %>
 
-                <br>
-                <br>
-                <label>Table Number: <%= table.tablenumber %></label>
-                <input name="reservedtable" type="checkbox" value="<%= table.id + ' ' +table.tablenumber %>">
-                <br>
+                
+                
+                <option value="<%= table.id + ' ' +table.tablenumber %>"><%= table.tablenumber %></option>
+                
                 
             <% }) %> 
-        <% } %>
-        
-        <!--Reservations-->
-        <% if(typeof reservations != 'undefined'){ %> 
-            <% reservations.forEach((reservation) => { %>
-                <p><%= reservation.email %></p>
-        <% }) %> 
-        <% } %>
 
-        <input type="text" name="name" >
-        <input type="email" name="email" >
-        <input type="text" name="phone" >
+        <% } %>
+    </select>
+    <br>
+        
+
+
+        <input type="text" name="name" placeholder="Name"><br>
+        <input type="email" name="email" placeholder="Email" ><br>
+        <input type="text" name="phone" placeholder="Phone Number" ><br>
         <input type="submit" value="Submit Resrvation" />
     </form>
 </div>

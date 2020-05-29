@@ -8,7 +8,7 @@ const ReservedDate = require("../../models/ReservedDate");
 const Hour = require("../../models/Hour");
 
 router.get("/", (req, res) => {
-    res.render("reservation");
+    res.redirect("/");
 });
 
 router.post("/", (req, res) => {

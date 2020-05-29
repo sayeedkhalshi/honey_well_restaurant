@@ -120,9 +120,29 @@ header {
     margin: 0px 0 30px;
 }
 
+/*reservation form */
 #reservation-form {
     text-align: center;
     padding: 50px;
+}
+input,
+select {
+    background-color: #f29829;
+    width: 40%;
+    border: 1px solid #795b51;
+    margin: 10px;
+    text-align: center;
+    color: #a6401b;
+    border-radius: 5px;
+}
+select {
+    width: 20%;
+}
+input[type="submit"] {
+    background-color: #a6401b;
+    padding: 20px 10px;
+    color: #eee;
+    font-size: 1.3em;
 }
 input[type="checkbox"] {
     background-color: #a6401b;
