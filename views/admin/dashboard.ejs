@@ -1,1 +1,18 @@
 <%- include("./partials/header") %>
+<div class="dashboard">
+<% if(typeof reservations != 'undefined'){ %> 
+    <h2>Reservations List</h2>
+    <% let counter = 1 %>
+    <% reservations.forEach((reservation) => { %>
+        <%= counter %> 
+        <p class="reservations-future">Reserved By: <%= reservation.name %></p>
+        <p class="reservations-future">Phone: <%= reservation.phone %></p>
+        <p class="reservations-future">ID: <%= reservation.id %></p>
+        <p class="reservations-future">Status: <%= reservation.status %></p>
+        
+        <br>
+        <br>
+        <% counter = counter + 1 %>
+    <%}) %>
+<%} %>
+</div>

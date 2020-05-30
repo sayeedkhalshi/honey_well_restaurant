@@ -19,12 +19,18 @@ const Reservation = require("../../models/Reservation");
 router.get("/", ensureAuthenticated, (req, res) => {
     if (req.user) {
         if (req.user.role === "admin") {
-            res.render("admin/dashboard", { layout: "layoutAdmin" });
+            Reservation.find({ time: "future" }).then((reservations) => {
+                res.render("admin/dashboard", {
+                    layout: "layoutAdmin",
+                    reservations,
+                });
+            });
         } else {
             res.send("Need to be a admin to access this page");
         }
     }
 });
+
 router.get("/users", ensureAuthenticated, (req, res) => {
     if (req.user) {
         if (req.user.role === "admin") {
