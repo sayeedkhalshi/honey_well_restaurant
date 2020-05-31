@@ -73,10 +73,15 @@
             <option selected disabled>Pick A Date:</option>
             <% if(typeof reserveddates != 'undefined'){ %> 
                 <% reserveddates.forEach((reserveddate) => { %>
-                   
+                    <% const reserveddate_array = reserveddate.opendate.split("-") %>
+                    <% const year = reserveddate_array[0] %>
+                    <% const month = reserveddate_array[1] %>
+                    <% const day = reserveddate_array[2] %>
+                    <% const dateboolean = (year < d.getFullYear()) || (year == d.getFullYear() && month < (d.getMonth() + 1)) || (year == d.getFullYear() && month == (d.getMonth() +1) && day < d.getDate()) %>
+                    <% if (!dateboolean){ %>
                         
                         <option value="<%= reserveddate.id + ' ' + reserveddate.opendate %>"><%= reserveddate.opendate %></option>
-                    
+                    <% } %> 
                      
                 <% }) %> 
             <% } %>
