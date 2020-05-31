@@ -132,14 +132,14 @@ header {
 }
 input,
 select {
-    background-color: darkgoldenrod;
+    background-color: #f29829;
     width: 40%;
-    border: 6px solid chocolate;
+    border: none;
     margin: 10px;
     text-align: center;
-    color: #a6401b;
+    color: #401d16;
     border-radius: 0;
-    box-shadow: 0px 0px 4px 0px #0b0202, inset 0px 0px 2px 0px #0b0202;
+    box-shadow: 0px 0px 2px 0px #0b0202, inset 0px 0px 0px 0px #0b0202;
     font-family: kanit;
     font-weight: bold;
     padding: 5px;
@@ -148,16 +148,16 @@ select {
     width: 20%;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg fill='darkgreen' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z' /><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg fill='wheat' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z' /><path d='M0 0h24v24H0z' fill='none'/></svg>");
     background-repeat: no-repeat;
     background-position-x: 100%;
     background-position-y: 0px;
     padding: 5px;
 }
 input[type="submit"] {
-    background-color: #f29829;
+    background-color: #a6401b;
     padding: 20px 10px;
-    color: #401d16;
+    color: wheat;
     font-size: 1.3em;
     border: 1px solid #999116;
     text-transform: uppercase;
