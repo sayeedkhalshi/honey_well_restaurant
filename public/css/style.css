@@ -132,11 +132,12 @@ header {
     text-align: center;
     padding: 50px;
     background-color: rgba(248, 193, 127, 0.4);
+    width: 50%;
 }
 input,
 select {
     background-color: #f29829;
-    width: 40%;
+    width: 60%;
     border: none;
     margin: 10px;
     text-align: center;
@@ -155,7 +156,6 @@ label {
     box-shadow: 0px 0px 2px 0px #0b0202, inset 0px 0px 6px 1px #971414;
 }
 select {
-    width: 20%;
     -webkit-appearance: none;
     -moz-appearance: none;
     background-image: url("data:image/svg+xml;utf8,<svg fill='wheat' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z' /><path d='M0 0h24v24H0z' fill='none'/></svg>");
