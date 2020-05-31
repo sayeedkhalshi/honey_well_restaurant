@@ -60,7 +60,7 @@
     <% if(typeof tables != 'undefined'){ %> 
         <% tables.forEach((table) => { %>
 
-            <p class="hour-future" style="display: none;"><%= table.tablenumber %></p>
+            <p class="table-future" style="display: none;"><%= table.tablenumber %></p>
  
         <% }) %> 
     <% } %>
@@ -93,7 +93,7 @@
         
         <% if(typeof hours != 'undefined'){ %> 
             
-            <select id="reservedtable" name="reservedhour">
+            <select id="reservedhour" name="reservedhour">
             <option selected disabled>Pick A Hour too:</option>
             <% hours.forEach((hour) => { %>
                 
@@ -112,8 +112,8 @@
 
       
         <% if(typeof tables != 'undefined'){ %> 
-            <select name="reservedtable" required>
-                <option selected disabled >And A Table too:</option>
+            <select name="reservedtable" id="reservedtable" required>
+                
 
             <% tables.forEach((table) => { %>
 

@@ -1,10 +1,50 @@
 window.onload = function () {
-    //admin section starts
+    //starts reservation form disabling
 
-    var today = new Date().toISOString().split("T")[0];
-    document.getElementsByName("opendate")[0].setAttribute("min", today);
+    //getting the reservations, date, hour, table data
+    let reservations = document.getElementsByClassName("reservations-future");
+    let reservationsComb = [];
 
-    //admin section ends
+    for (let i = 0; i < reservations.length; i++) {
+        reservationsComb.push(reservations[i].innerHTML);
+    }
+    console.log(reservationsComb.length);
+
+    let datesGrab = document.getElementsByClassName("date-future");
+    let hoursGrab = document.getElementsByClassName("hour-future");
+    let tablesGrab = document.getElementsByClassName("table-future");
+    let tables = [];
+    for (let i = 0; i < tablesGrab.length; i++) {
+        tables.push(tablesGrab[i].innerHTML);
+    }
+
+    //getting the reservation form value
+    let dateId = document.getElementById("reserveddate");
+    let hourId = document.getElementById("reservedhour");
+    let tableId = document.getElementById("reservedtable");
+
+    dateId.addEventListener("click", disableTable);
+    hourId.addEventListener("click", disableTable);
+
+    function disableTable() {
+        for (let option = 0; option < tableId.options.length; option++) {
+            let combination =
+                dateId.value.split(" ")[1] +
+                " " +
+                hourId.value.split(" ")[1] +
+                " " +
+                tableId.options[option].value.split(" ")[1];
+
+            console.log(combination, reservationsComb);
+
+            if (reservationsComb.indexOf(combination) != -1) {
+                //diable options in table
+                tableId.options[option].setAttribute("hidden", true);
+            }
+        }
+    }
+
+    //end reservation form disabling
 
     /*
     document.getElementById("edit").addEventListener("click", loadName);

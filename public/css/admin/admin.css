@@ -48,3 +48,8 @@ header {
 }
 
 /* End table admin section */
+input {
+    width: 300px;
+    text-align: center;
+    margin: 20px auto;
+}
