@@ -147,6 +147,13 @@ select {
     font-weight: bold;
     padding: 5px;
 }
+label {
+    color: #401d16;
+    background-color: #f29829;
+    padding: 5px;
+    font-weight: bold;
+    box-shadow: 0px 0px 2px 0px #0b0202, inset 0px 0px 6px 1px #971414;
+}
 select {
     width: 20%;
     -webkit-appearance: none;

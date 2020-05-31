@@ -112,6 +112,7 @@
 
       
         <% if(typeof tables != 'undefined'){ %> 
+            
             <select name="reservedtable" id="reservedtable" required>
                 
 
@@ -119,7 +120,7 @@
 
                 
                 
-                <option value="<%= table.id + ' ' +table.tablenumber %>"><%= table.tablenumber %></option>
+                <option value="<%= table.id + ' ' +table.tablenumber %>">Choose Table No: <%= table.tablenumber %></option>
                 
                 
             <% }) %> 
