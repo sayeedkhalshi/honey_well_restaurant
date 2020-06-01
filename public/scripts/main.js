@@ -23,10 +23,15 @@ window.onload = function () {
     let hourId = document.getElementById("reservedhour");
     let tableId = document.getElementById("reservedtable");
 
-    dateId.addEventListener("click", disableTable);
-    hourId.addEventListener("click", disableTable);
+    dateId.addEventListener("change", disableTable);
+    hourId.addEventListener("change", disableTable);
 
     function disableTable() {
+        //reset the options hidden attibute first
+        for (let option = 1; option < tableId.options.length; option++) {
+            tableId.options[option].removeAttribute("disabled");
+        }
+
         for (let option = 0; option < tableId.options.length; option++) {
             let combination =
                 dateId.value.split(" ")[1] +
@@ -39,7 +44,7 @@ window.onload = function () {
 
             if (reservationsComb.indexOf(combination) != -1) {
                 //diable options in table
-                tableId.options[option].setAttribute("hidden", true);
+                tableId.options[option].setAttribute("disabled", true);
             }
         }
     }
