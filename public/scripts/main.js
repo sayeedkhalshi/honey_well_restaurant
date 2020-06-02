@@ -8,7 +8,6 @@ window.onload = function () {
     for (let i = 0; i < reservations.length; i++) {
         reservationsComb.push(reservations[i].innerHTML);
     }
-    console.log(reservationsComb.length);
 
     let datesGrab = document.getElementsByClassName("date-future");
     let hoursGrab = document.getElementsByClassName("hour-future");
@@ -26,15 +25,45 @@ window.onload = function () {
         dates.push(datesGrab[i].innerHTML);
     }
 
-    let allCombForADate = hours.length * tables.length;
+    let allComForADate = hours.length * tables.length;
     let allCombForAHour = tables.length;
+
     //getting the reservation form value
     let dateId = document.getElementById("reserveddate");
     let hourId = document.getElementById("reservedhour");
     let tableId = document.getElementById("reservedtable");
 
-    dateId.addEventListener("change", disableTable);
+    //run table and hour disable function globally
+    disableTable();
+    hourDisable();
+    //run disbale table on change the value
+    dateId.addEventListener("change", disableTable, hourDisable);
     hourId.addEventListener("change", disableTable);
+
+    function hourDisable() {
+        /*
+        for (s = 1; s < hourId.options.length; s++) {
+            let AllResForAHour = 0;
+            for (let r = 0; r < reservationsComb.length; r++) {
+                if (
+                    reservationComb[r].split(" ")[0] ==
+                    dateId.value.split(" ")[1]
+                ) {
+                    if (
+                        hourId.options[s].value.split(" ")[1] ==
+                        reservationsComb[r].split(" ")[1]
+                    ) {
+                        AllResForAHour += 1;
+                    }
+                }
+            }
+
+            if (AllResForAHour == allCombForAHour) {
+                hourId.options[s].setAttribute("disabled", true);
+            }
+        }
+        */
+    }
 
     function disableTable() {
         //reset the options hidden attibute first
@@ -50,12 +79,25 @@ window.onload = function () {
                 " " +
                 tableId.options[option].value.split(" ")[1];
 
-            console.log(combination, reservationsComb);
-
             if (reservationsComb.indexOf(combination) != -1) {
                 //diable options in table
                 tableId.options[option].setAttribute("disabled", true);
             }
+        }
+    }
+
+    //date disabled
+    for (let j = 0; j < dateId.options.length; j++) {
+        let AllResForADate = 0;
+        for (let k = 0; k < reservationsComb.length; k++) {
+            if (
+                dateId.options[j].innerHTML == reservationsComb[k].split(" ")[0]
+            ) {
+                AllResForADate += 1;
+            }
+        }
+        if (AllResForADate == allComForADate) {
+            dateId.options[j].setAttribute("disabled", true);
         }
     }
 
