@@ -124,7 +124,7 @@ header {
 .reservation {
     background-image: url("/img/rest-optimized-jpg.jpg");
     background-size: cover;
-    background-color: #401d16;
+
     box-shadow: inset 0px 2px 4px 1px #220c0c;
     border-top: 3px solid #a6401b;
 }
