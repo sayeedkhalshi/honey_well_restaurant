@@ -127,11 +127,13 @@ header {
     background-color: #401d16;
     box-shadow: inset 0px 2px 4px 1px #220c0c;
     border-top: 3px solid #a6401b;
-    padding: 100px;
+}
+.reservation-wrapper {
+    background-color: rgba(64, 29, 22, 0.3);
 }
 #reservation-form {
     text-align: center;
-    padding: 50px;
+    padding: 100px 30px;
     background-color: rgba(248, 193, 127, 0.4);
     width: 50%;
 }

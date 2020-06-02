@@ -14,10 +14,20 @@ window.onload = function () {
     let hoursGrab = document.getElementsByClassName("hour-future");
     let tablesGrab = document.getElementsByClassName("table-future");
     let tables = [];
+    let hours = [];
+    let dates = [];
     for (let i = 0; i < tablesGrab.length; i++) {
         tables.push(tablesGrab[i].innerHTML);
     }
+    for (let i = 0; i < hoursGrab.length; i++) {
+        hours.push(hoursGrab[i].innerHTML);
+    }
+    for (let i = 0; i < datesGrab.length; i++) {
+        dates.push(datesGrab[i].innerHTML);
+    }
 
+    let allCombForADate = hours.length * tables.length;
+    let allCombForAHour = tables.length;
     //getting the reservation form value
     let dateId = document.getElementById("reserveddate");
     let hourId = document.getElementById("reservedhour");
