@@ -26,7 +26,6 @@ window.onload = function () {
     }
 
     let allComForADate = hours.length * tables.length;
-    let allCombForAHour = tables.length;
 
     //getting the reservation form value
     let dateId = document.getElementById("reserveddate");
@@ -37,33 +36,9 @@ window.onload = function () {
     disableTable();
     hourDisable();
     //run disbale table on change the value
-    dateId.addEventListener("change", disableTable, hourDisable);
+    dateId.addEventListener("change", disableTable);
+    dateId.addEventListener("change", hourDisable);
     hourId.addEventListener("change", disableTable);
-
-    function hourDisable() {
-        /*
-        for (s = 1; s < hourId.options.length; s++) {
-            let AllResForAHour = 0;
-            for (let r = 0; r < reservationsComb.length; r++) {
-                if (
-                    reservationComb[r].split(" ")[0] ==
-                    dateId.value.split(" ")[1]
-                ) {
-                    if (
-                        hourId.options[s].value.split(" ")[1] ==
-                        reservationsComb[r].split(" ")[1]
-                    ) {
-                        AllResForAHour += 1;
-                    }
-                }
-            }
-
-            if (AllResForAHour == allCombForAHour) {
-                hourId.options[s].setAttribute("disabled", true);
-            }
-        }
-        */
-    }
 
     function disableTable() {
         //reset the options hidden attibute first
@@ -82,6 +57,32 @@ window.onload = function () {
             if (reservationsComb.indexOf(combination) != -1) {
                 //diable options in table
                 tableId.options[option].setAttribute("disabled", true);
+            }
+        }
+    }
+
+    //hour disable
+    function hourDisable() {
+        for (let option = 1; option < hourId.options.length; option++) {
+            hourId.options[option].removeAttribute("disabled");
+        }
+
+        for (let option = 1; option < hourId.options.length; option++) {
+            let count = 0;
+            for (let t = 0; t < tables.length; t++) {
+                let comb =
+                    dateId.value.split(" ")[1] +
+                    " " +
+                    hourId.options[option].value.split(" ")[1] +
+                    " " +
+                    tables[t];
+
+                if (reservationsComb.indexOf(comb) != -1) {
+                    count += 1;
+                }
+            }
+            if (count == tables.length) {
+                hourId.options[option].setAttribute("disabled", true);
             }
         }
     }
