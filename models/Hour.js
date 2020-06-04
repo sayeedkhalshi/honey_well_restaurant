@@ -8,7 +8,7 @@ const HoursSchema = new Schema({
     },
     user: {
         type: Schema.Types.ObjectId,
-        required: true,
+        ref: "users",
     },
     date: {
         type: Date,

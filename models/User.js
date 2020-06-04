@@ -24,6 +24,7 @@ const UserSchema = new Schema({
     },
     addedby: {
         type: Schema.Types.ObjectId,
+        ref: "users",
     },
 });
 module.exports = User = new mongoose.model("users", UserSchema);

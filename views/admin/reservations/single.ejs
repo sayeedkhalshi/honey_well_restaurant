@@ -1,0 +1,42 @@
+<%- include("../../partials/header") %>
+
+<div class="single-res">
+
+    <ul class="field-name">
+        
+        <li>Reserved By:</li>
+        <li>Phone:</li>
+        <li>Email:</li>
+        <li>Date:</li>
+        <li>Hour:</li>
+        <li>Table:</li>
+        <li>Status:</li>
+        <li>Confirm</li>
+    </ul>
+    
+    <% if(reservations != "undefined"){ %>
+        <%reservations.forEach(reservation => {%>
+
+
+        <ul class="res-dash">
+            
+    
+            <li class="reservations-future"><%= reservation.name %></li>
+            <li class="reservations-future"><%= reservation.phone %></li>
+            <li class="reservations-future"><%= reservation.email %></li>
+            <li class="reservations-future">
+                <%= reservation.combination.split(" ")[0] %>
+            </li>
+            <li class="reservations-future">
+                <%= reservation.combination.split(" ")[1] %>
+            </li>
+            <li class="reservations-future">
+                <%= reservation.combination.split(" ")[2] %>
+            </li>
+            <li class="reservations-future"><%= reservation.status %></li>
+            <li class="reservations-future"><button>Confirm</button></li>
+        </ul>
+        <%})%>
+        <%}%>
+
+</div>

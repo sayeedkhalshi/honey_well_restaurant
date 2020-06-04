@@ -12,18 +12,19 @@ const ReservationSchema = new Schema({
     },
     user: {
         type: Schema.Types.ObjectId,
+        ref: "users",
     },
     reserveddate: {
         type: Schema.Types.ObjectId,
-        required: true,
+        ref: "reserveddates",
     },
     reservedhour: {
         type: Schema.Types.ObjectId,
-        required: true,
+        ref: "hours",
     },
     reservedtable: {
         type: Schema.Types.ObjectId,
-        required: true,
+        ref: "tables",
     },
     email: {
         type: String,
@@ -38,27 +39,37 @@ const ReservationSchema = new Schema({
         required: true,
     },
     status: {
-        //Status: pending, confirmed, halt, cancelled, served
+        //Status: pending, confirmed, cancelled, served
         type: String,
         required: true,
     },
     pendingby: {
         type: Schema.Types.ObjectId,
+        ref: "users",
+    },
+    special: {
+        type: String,
+        default: "no",
     },
     specialby: {
         type: Schema.Types.ObjectId,
+        ref: "users",
     },
     haltby: {
         type: Schema.Types.ObjectId,
+        ref: "users",
     },
     cancelledby: {
         type: Schema.Types.ObjectId,
+        ref: "users",
     },
     servedby: {
         type: Schema.Types.ObjectId,
+        ref: "users",
     },
     confirmedby: {
         type: Schema.Types.ObjectId,
+        ref: "users",
     },
     comment: {
         type: String,

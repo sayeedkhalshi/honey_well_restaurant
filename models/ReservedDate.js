@@ -13,7 +13,7 @@ const DateSchema = new Schema({
 
     user: {
         type: Schema.Types.ObjectId,
-        required: true,
+        ref: "users",
     },
 
     date: {
