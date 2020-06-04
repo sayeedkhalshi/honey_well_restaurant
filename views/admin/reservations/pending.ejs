@@ -1,4 +1,13 @@
-<%- include("../../partials/header") %>
+<%- include("../partials/header") %>
+
+<div class="btn">
+    <a href="/admin/ongoing"><button class="ongoing-btn">Ongoing</button></a>
+    <a href="/admin/pending"><button class="ongoing-btn">Pending</button></a>
+    <a href="/admin/confirmed"><button class="ongoing-btn">Confirmed</button></a>
+    <a href="/admin/served"><button class="ongoing-btn">Served</button></a>
+    <a href="/admin/cancelled"><button class="ongoing-btn">Cancelled</button></a>
+    <a href="/admin/special"><button class="ongoing-btn">Special</button></a>
+</div>
 
 <div class="pending">
 
@@ -6,7 +15,7 @@
 <h2 class="dash-heading">Pending Reservations List</h2>
 <% let counter = 1 %>
 <ul class="field-name">
-    <li>No:</li>
+    <li>#:</li>
     <li>Reserved By:</li>
     <li>Phone:</li>
     <li>Email:</li>
@@ -15,29 +24,36 @@
     <li>Table:</li>
     <li>Status:</li>
     <li>Confirm</li>
+    <li>Special</li>
+    <li>Cancell?</li>
 </ul>
 <% reservations.forEach((reservation) => { %>
     <% if(reservation.status == "pending"){ %>
-<a href="reservations/<%= reservation.combination %>">
+
     <ul class="res-dash">
         <li><%= counter %></li>
 
-        <li class="reservations-future"><%= reservation.name %></li>
+        <a href="reservations/<%= reservation.combination %>"><li class="reservations-future"><%= reservation.name %></li></a>
         <li class="reservations-future"><%= reservation.phone %></li>
         <li class="reservations-future"><%= reservation.email %></li>
-        <li class="reservations-future">
+        <li class="reservations-date">
             <%= reservation.combination.split(" ")[0] %>
         </li>
-        <li class="reservations-future">
+        <li class="reservations-hour">
             <%= reservation.combination.split(" ")[1] %>
         </li>
-        <li class="reservations-future">
+        <li class="reservations-table">
             <%= reservation.combination.split(" ")[2] %>
         </li>
         <li class="reservations-future"><%= reservation.status %></li>
-        <li class="reservations-future"><button>Confirm</button></li>
+        <li class="reservations-future"><form action="/admin/confirm" method="POST"><input name="confirmvalue" class="hide" hidden value="<%= reservation.combination %>" ><input class="confirm-btn" type="submit" value="Confirm" style="width: 70px"></form></li>
+        <li class="reservations-future"><form action="/admin/special" method="POST"><input name="specialvalue" class="hide" hidden value="<%= reservation.combination %>" ><input class="confirm-btn" type="submit" value="Mark Special" style="width: 70px"></form></li>
+        <li class="reservations-future"><form action="/admin/cancell" method="POST"><input name="cancellvalue" class="hide" hidden value="<%= reservation.combination %>" ><input class="confirm-btn" type="submit" value="Cancell?" style="width: 70px"></form></li>
     </ul>
-</a>
+
 <% } %>
 <% counter = counter + 1 %> <%}) %> <%} %>
 </div>
+<script>
+
+</script>

@@ -1,5 +1,12 @@
 <%- include("../../partials/header") %>
-
+<div class="btn">
+    <a href="/admin/ongoing"><button class="ongoing-btn">Ongoing</button></a>
+    <a href="/admin/pending"><button class="ongoing-btn">Pending</button></a>
+    <a href="/admin/confirmed"><button class="ongoing-btn">Confirmed</button></a>
+    <a href="/admin/served"><button class="ongoing-btn">Served</button></a>
+    <a href="/admin/cancelled"><button class="ongoing-btn">Cancelled</button></a>
+    <a href="/admin/special"><button class="ongoing-btn">Special</button></a>
+</div>
 <div class="ongoing">
     <% if(typeof reservations != 'undefined'){ %>
         <h2 class="dash-heading">Pending Reservations List</h2>
@@ -13,7 +20,7 @@
             <li>Hour:</li>
             <li>Table:</li>
             <li>Status:</li>
-            <li>Confirm</li>
+            <li>Served: </li>
         </ul>
         <% reservations.forEach((reservation) => { %>
             <% if(reservation.status == "ongoing"){ %>
@@ -34,7 +41,7 @@
                     <%= reservation.combination.split(" ")[2] %>
                 </li>
                 <li class="reservations-future"><%= reservation.status %></li>
-                <li class="reservations-future"><button>Mark Served</button></li>
+                <li class="reservations-future"><form action="/admin/served" method="POST"><input name="servedvalue" class="hide" hidden value="<%= reservation.combination %>" ><input class="confirm-btn" type="submit" value="Mark Served" style="width: 70px"></button></li>
             </ul>
         </a>
         <% } %>

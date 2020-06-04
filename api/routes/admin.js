@@ -15,6 +15,139 @@ const Table = require("../../models/Table");
 const Hour = require("../../models/Hour");
 const ReservedDate = require("../../models/ReservedDate");
 const Reservation = require("../../models/Reservation");
+const Cancell = require("../../models/Cancell");
+
+//Served
+router.get("/served", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        if (req.user.role === "admin") {
+            Reservation.find({ time: "future" }).then((reservations) => {
+                res.render("admin/reservations/served", {
+                    layout: "layoutAdmin",
+                    reservations,
+                });
+            });
+        } else {
+            res.send("Need to be a admin to access this page");
+        }
+    }
+});
+router.post("/served", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        if (req.user.role === "admin" || req.user.role === "employee") {
+            Reservation.findOneAndUpdate(
+                { combination: req.body.servedvalue },
+                { servedby: req.user.id, status: "served" },
+                { new: true }
+            ).then((reservation) => {
+                res.redirect("/admin/ongoing");
+            });
+        } else {
+            res.send("Need to be a admin to access this page");
+        }
+    }
+});
+
+//cancell
+router.get("/cancelled", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        if (req.user.role === "admin") {
+            Cancell.find().then((reservations) => {
+                res.render("admin/reservations/cancelled", {
+                    layout: "layoutAdmin",
+                    reservations,
+                });
+            });
+        } else {
+            res.send("Need to be a admin to access this page");
+        }
+    }
+});
+router.post("/cancell", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        if (req.user.role === "admin" || req.user.role === "employee") {
+            Reservation.findOne({ combination: req.body.cancellvalue })
+                .then((reservation) => {
+                    if (!reservation) {
+                        res.redirect("/admin/pending");
+                    }
+                    if (reservation) {
+                        Cancell.findOne({
+                            combination: req.body.cancellvalue,
+                        })
+                            .then((cacelledreservation) => {
+                                if (cacelledreservation) {
+                                    res.redirect("/admin/pending");
+                                }
+                                if (!cacelledreservation) {
+                                    const newCancelled = new Cancell({
+                                        combination: reservation.combination,
+                                        name: reservation.name,
+                                        email: reservation.email,
+                                        phone: reservation.phone,
+                                        status: "cancelled",
+                                        cacelledby: req.user.id,
+                                    });
+                                    newCancelled
+                                        .save()
+                                        .then((cancelledReservation) => {
+                                            console.log("Cancell created");
+                                            Reservation.deleteOne({
+                                                combination:
+                                                    req.body.cancellvalue,
+                                            })
+                                                .then(() => {
+                                                    console.log("deleted");
+                                                    res.redirect(
+                                                        "/admin/pending"
+                                                    );
+                                                })
+                                                .catch((err) =>
+                                                    console.log(err)
+                                                );
+                                        });
+                                }
+                            })
+                            .catch((err) => console.log(err));
+                    }
+                })
+                .catch((err) => console.log(err));
+        } else {
+            res.send("Need to be a admin to access this page");
+        }
+    }
+});
+
+//special
+router.post("/special", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        if (req.user.role === "admin" || req.user.role === "employee") {
+            Reservation.findOneAndUpdate(
+                { combination: req.body.servedvalue },
+                { specialby: req.user.id, special: "yes" },
+                { new: true }
+            ).then((reservation) => {
+                res.redirect("/admin/pending");
+            });
+        } else {
+            res.send("Need to be a admin to access this page");
+        }
+    }
+});
+router.get("/special", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        if (req.user.role === "admin") {
+            Reservation.find({ time: "future" }).then((reservations) => {
+                res.render("admin/reservations/special", {
+                    layout: "layoutAdmin",
+                    reservations,
+                });
+            });
+        } else {
+            res.send("Need to be a admin to access this page");
+        }
+    }
+});
 
 //find reservations by id
 router.get("/reservations/:comb", ensureAuthenticated, (req, res) => {
@@ -49,6 +182,21 @@ router.get("/ongoing", ensureAuthenticated, (req, res) => {
         }
     }
 });
+router.post("/ongoing", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        if (req.user.role === "admin" || req.user.role === "employee") {
+            Reservation.findOneAndUpdate(
+                { combination: req.body.ongoingvalue },
+                { ongoingby: req.user.id, status: "ongoing" },
+                { new: true }
+            ).then((reservation) => {
+                res.redirect("/admin");
+            });
+        } else {
+            res.send("Need to be a admin to access this page");
+        }
+    }
+});
 
 //Pending reservation
 router.get("/pending", ensureAuthenticated, (req, res) => {
@@ -59,6 +207,22 @@ router.get("/pending", ensureAuthenticated, (req, res) => {
                     layout: "layoutAdmin",
                     reservations,
                 });
+            });
+        } else {
+            res.send("Need to be a admin to access this page");
+        }
+    }
+});
+
+router.post("/confirm", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        if (req.user.role === "admin" || req.user.role === "employee") {
+            Reservation.findOneAndUpdate(
+                { combination: req.body.confirmvalue },
+                { confirmedby: req.user.id, status: "confirmed" },
+                { new: true }
+            ).then((reservation) => {
+                res.redirect("/admin");
             });
         } else {
             res.send("Need to be a admin to access this page");

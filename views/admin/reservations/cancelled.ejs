@@ -1,1 +1,59 @@
-<%- include("../../partials/header") %>
+<%- include("../partials/header") %>
+
+<div class="btn">
+    <a href="/admin/ongoing"><button class="ongoing-btn">Ongoing</button></a>
+    <a href="/admin/pending"><button class="ongoing-btn">Pending</button></a>
+    <a href="/admin/confirmed"><button class="ongoing-btn">Confirmed</button></a>
+    <a href="/admin/served"><button class="ongoing-btn">Served</button></a>
+    <a href="/admin/cancelled"><button class="ongoing-btn">Cancelled</button></a>
+    <a href="/admin/special"><button class="ongoing-btn">Special</button></a>
+</div>
+
+<div class="cancelled">
+
+<% if(typeof reservations != 'undefined'){ %>
+<h2 class="dash-heading">Cancelled Reservations List</h2>
+<% let counter = 1 %>
+<ul class="field-name">
+    <li>#:</li>
+    <li>Reserved By:</li>
+    <li>Phone:</li>
+    <li>Email:</li>
+    <li>Date:</li>
+    <li>Hour:</li>
+    <li>Table:</li>
+    <li>Status:</li>
+    <li>Confirm</li>
+    <li>Special</li>
+    <li>Cancell?</li>
+</ul>
+<% reservations.forEach((reservation) => { %>
+    <% if(reservation.status == "cancelled"){ %>
+
+    <ul class="res-dash">
+        <li><%= counter %></li>
+
+        <a href="reservations/<%= reservation.combination %>"><li class="reservations-future"><%= reservation.name %></li></a>
+        <li class="reservations-future"><%= reservation.phone %></li>
+        <li class="reservations-future"><%= reservation.email %></li>
+        <li class="reservations-date">
+            <%= reservation.combination.split(" ")[0] %>
+        </li>
+        <li class="reservations-hour">
+            <%= reservation.combination.split(" ")[1] %>
+        </li>
+        <li class="reservations-table">
+            <%= reservation.combination.split(" ")[2] %>
+        </li>
+        <li class="reservations-future"><%= reservation.status %></li>
+        <li class="reservations-future"></li>
+        <li class="reservations-future"></li>
+        <li class="reservations-future"></li>
+    </ul>
+
+<% } %>
+<% counter = counter + 1 %> <%}) %> <%} %>
+</div>
+<script>
+
+</script>

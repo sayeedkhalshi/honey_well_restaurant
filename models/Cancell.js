@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const ReservationSchema = new Schema({
+const CancelledReservationSchema = new Schema({
     combination: {
         type: String,
         required: true,
@@ -55,6 +55,10 @@ const ReservationSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "users",
     },
+    cancelledby: {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+    },
 
     servedby: {
         type: Schema.Types.ObjectId,
@@ -74,6 +78,6 @@ const ReservationSchema = new Schema({
 });
 
 module.exports = Reservation = new mongoose.model(
-    "reservations",
-    ReservationSchema
+    "cancelledreservations",
+    CancelledReservationSchema
 );

@@ -62,7 +62,7 @@ input {
 .field-name {
     list-style: none;
     display: grid;
-    grid-template-columns: 3% 11% 8% 22% 9% 8% 8% 10% 10%;
+    grid-template-columns: 5% 9% 8% 22% 9% 8% 5% 7% 7% 7% 13%;
 }
 .res-dash li,
 .field-name li {
@@ -73,10 +73,20 @@ input {
     border-left: 1px solid #fff;
     box-shadow: inset 0px 0px 6px 1px #bbb;
 }
+.hide {
+    display: none;
+}
 .dash-heading {
     text-align: center;
 }
 .single-res .res-dash,
 .single-res .field-name {
     grid-template-columns: 11% 8% 22% 9% 8% 8% 10% 10%;
+}
+.btn {
+    text-align: center;
+    margin: 10px;
+}
+.btn button {
+    cursor: pointer;
 }
