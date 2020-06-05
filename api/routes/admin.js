@@ -719,4 +719,222 @@ router.get("/reservations", ensureAuthenticated, (req, res) => {
     }
 });
 
+//search reservation only admin
+router.post("/reservations", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        if (req.user.role === "admin") {
+            //When search term is name
+            if (req.body.searchterm === "name") {
+                Reservation.find({ name: req.body.search }).then(
+                    (reservations) => {
+                        if (!reservations) {
+                            res.render("admin/reservations/reservations", {
+                                reservations,
+                            });
+                        }
+                        if (reservations) {
+                            res.render("admin/reservations/reservations", {
+                                reservations,
+                            });
+                        }
+                    }
+                );
+            }
+            //When search term is email
+            if (req.body.searchterm === "email") {
+                Reservation.find({ email: req.body.search }).then(
+                    (reservations) => {
+                        if (!reservations) {
+                            res.render("admin/reservations/reservations", {
+                                reservations,
+                            });
+                        }
+                        if (reservations) {
+                            res.render("admin/reservations/reservations", {
+                                reservations,
+                            });
+                        }
+                    }
+                );
+            }
+            //When search term is phone
+            if (req.body.searchterm === "phone") {
+                Reservation.find({ phone: req.body.search }).then(
+                    (reservations) => {
+                        if (!reservations) {
+                            res.render("admin/reservations/reservations", {
+                                reservations,
+                            });
+                        }
+                        if (reservations) {
+                            res.render("admin/reservations/reservations", {
+                                reservations,
+                            });
+                        }
+                    }
+                );
+            }
+
+            //When search term is date
+            if (req.body.searchterm === "date") {
+                Reservation.find({ reserveddate: req.body.search }).then(
+                    (reservations) => {
+                        if (!reservations) {
+                            res.render("admin/reservations/reservations", {
+                                reservations,
+                            });
+                        }
+                        if (reservations) {
+                            res.render("admin/reservations/reservations", {
+                                reservations,
+                            });
+                        }
+                    }
+                );
+            }
+
+            //When search term is hour
+            if (req.body.searchterm === "hour") {
+                Reservation.find({ reservedhour: req.body.search }).then(
+                    (reservations) => {
+                        if (!reservations) {
+                            res.render("admin/reservations/reservations", {
+                                reservations,
+                            });
+                        }
+                        if (reservations) {
+                            res.render("admin/reservations/reservations", {
+                                reservations,
+                            });
+                        }
+                    }
+                );
+            }
+
+            //When search term is Table
+            if (req.body.searchterm === "table") {
+                Reservation.find({ reservedtable: req.body.search }).then(
+                    (reservations) => {
+                        if (!reservations) {
+                            res.render("admin/reservations/reservations", {
+                                reservations,
+                            });
+                        }
+                        if (reservations) {
+                            res.render("admin/reservations/reservations", {
+                                reservations,
+                            });
+                        }
+                    }
+                );
+            }
+        } else {
+            res.send("Need to be a admin to access this page");
+        }
+    }
+});
+
+//search reservation only admin
+router.post("/users/customer", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        if (req.user.role === "admin") {
+            //When search term is name
+            if (req.body.searchterm === "name") {
+                User.find({ name: req.body.search }).then((users) => {
+                    if (!users) {
+                        res.render("admin/users/customers", {
+                            users,
+                        });
+                    }
+                    if (users) {
+                        res.render("admin/users/customers", {
+                            users,
+                        });
+                    }
+                });
+            }
+            //When search term is email
+            if (req.body.searchterm === "email") {
+                User.find({ email: req.body.search }).then((users) => {
+                    if (!users) {
+                        res.render("admin/users/customers", {
+                            users,
+                        });
+                    }
+                    if (users) {
+                        res.render("admin/users/customers", {
+                            users,
+                        });
+                    }
+                });
+            }
+            //When search term is phone
+            if (req.body.searchterm === "phone") {
+                User.find({ phone: req.body.search }).then((users) => {
+                    if (!users) {
+                        res.render("admin/users/customers", {
+                            users,
+                        });
+                    }
+                    if (users) {
+                        res.render("admin/users/customers", {
+                            users,
+                        });
+                    }
+                });
+            }
+
+            //When search term is date
+            if (req.body.searchterm === "date") {
+                User.find({ reserveddate: req.body.search }).then((users) => {
+                    if (!users) {
+                        res.render("admin/users/customers", {
+                            users,
+                        });
+                    }
+                    if (users) {
+                        res.render("admin/users/customers", {
+                            users,
+                        });
+                    }
+                });
+            }
+
+            //When search term is hour
+            if (req.body.searchterm === "hour") {
+                User.find({ reservedhour: req.body.search }).then((users) => {
+                    if (!users) {
+                        res.render("admin/users/customers", {
+                            users,
+                        });
+                    }
+                    if (users) {
+                        res.render("admin/users/customers", {
+                            users,
+                        });
+                    }
+                });
+            }
+
+            //When search term is Table
+            if (req.body.searchterm === "table") {
+                User.find({ reservedtable: req.body.search }).then((users) => {
+                    if (!users) {
+                        res.render("admin/users/customers", {
+                            users,
+                        });
+                    }
+                    if (users) {
+                        res.render("admin/users/customers", {
+                            users,
+                        });
+                    }
+                });
+            }
+        } else {
+            res.send("Need to be a admin to access this page");
+        }
+    }
+});
+
 module.exports = router;

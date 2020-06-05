@@ -63,11 +63,11 @@ router.post("/", (req, res) => {
                                                             tableData[1],
                                                         user: req.user.id,
                                                         reserveddate:
-                                                            dateData[0],
+                                                            dateData[1],
                                                         reservedhour:
-                                                            hourData[0],
+                                                            hourData[1],
                                                         reservedtable:
-                                                            tableData[0],
+                                                            tableData[1],
                                                         email: req.body.email,
                                                         phone: req.body.phone,
                                                         name: req.body.name,
@@ -85,11 +85,11 @@ router.post("/", (req, res) => {
                                                             " " +
                                                             tableData[1],
                                                         reserveddate:
-                                                            dateData[0],
+                                                            dateData[1],
                                                         reservedhour:
-                                                            hourData[0],
+                                                            hourData[1],
                                                         reservedtable:
-                                                            tableData[0],
+                                                            tableData[1],
                                                         email: req.body.email,
                                                         phone: req.body.phone,
                                                         name: req.body.name,

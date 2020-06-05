@@ -15,16 +15,16 @@ const ReservationSchema = new Schema({
         ref: "users",
     },
     reserveddate: {
-        type: Schema.Types.ObjectId,
-        ref: "reserveddates",
+        type: String,
+        required: true,
     },
     reservedhour: {
-        type: Schema.Types.ObjectId,
-        ref: "hours",
+        type: String,
+        required: true,
     },
     reservedtable: {
-        type: Schema.Types.ObjectId,
-        ref: "tables",
+        type: String,
+        required: true,
     },
     email: {
         type: String,

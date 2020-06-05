@@ -1,6 +1,24 @@
 <%- include("../partials/header") %>
 <div class="admin-reservations">
 
+    <div class="search-reservations">
+        <form method="POST" action="/admin/reservations">
+            <input name="search" type="text" placeholder="Write search term here" required>
+            <select required name="searchterm">
+                <option disabled selected>FInd Using</option>
+                <option value="name">Name</option>
+                <option value="email">email</option>
+                <option value="phone">Phone</option>
+                <option value="date">date</option>
+                <option value="hour">hour</option>
+                <option value="table">table</option>
+            </select>
+            <input type="submit" value="Search Reservations">
+        </form>
+
+
+    </div>
+
 <% if(typeof reservations != 'undefined'){ %>
     <h2 class="dash-heading">All The Served Reservations List</h2>
     <% let counter = 1 %>

@@ -9,6 +9,10 @@ body {
     font-family: "kanit";
 }
 
+#all-content {
+    min-width: 1200px;
+}
+
 header {
     text-align: center;
 }
@@ -191,4 +195,8 @@ input[type="submit"] {
     color: #edeeee;
     border-radius: 2px;
     box-shadow: 1px 1px 1px 0px #333;
+}
+
+.customers {
+    margin: 20px;
 }
