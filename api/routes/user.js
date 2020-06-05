@@ -10,11 +10,31 @@ const {
 
 //load User model
 const User = require("../../models/User");
+const Reservation = require("../../models/Reservation");
 
 //GET Private dashboard
-router.get("/dashboard", ensureAuthenticated, (req, res) =>
-    res.render("dashboard")
-);
+router.get("/dashboard", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        User.findOne({ email: req.user.email })
+            .then((user) => {
+                if (!user) {
+                    res.json({ msg: "user not found" });
+                }
+                if (user) {
+                    Reservation.find({ email: req.user.email })
+                        .then((reservations) => {
+                            res.render("dashboard", {
+                                layout: "layout",
+                                user,
+                                reservations,
+                            });
+                        })
+                        .catch((err) => console.log(err));
+                }
+            })
+            .catch((err) => res.json({ msg: "user not found" }));
+    }
+});
 
 //GET public login
 router.get("/login", forwardAuthenticated, (req, res) => res.render("login"));

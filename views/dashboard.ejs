@@ -1,2 +1,28 @@
 <%- include("./partials/header") %>
-<h2>Hi</h2>
+<div class="user-dashboard">
+    <p><b>Name: </b><%= user.name %> </p>
+    <p><b>Email: </b><%= user.email %> </p>
+    <p><b>Phone: </b><%= user.phone %> </p>
+
+    <h3><b>Reservations: </b> </h3>
+
+    <% if(reservations != "undefined") {%> 
+        <ul class="user-dash">
+            <li><b>#:</b></li>
+            <li><b>Date:</b></li>
+            <li><b>Hour:</b></li>
+            <li><b>Table:</b></li>
+        </ul>
+        <% let counter = 1 %> 
+        <% reservations.forEach(reservation => { %>
+            <ul class="user-dash">
+                <li><%= counter %> </li>
+                <li><%= reservation.combination.split(" ")[0] %></li>
+                <li><%= reservation.combination.split(" ")[1] %></li>
+                <li><%= reservation.combination.split(" ")[2] %></li>
+            </ul>
+            <% counter += 1 %> 
+        <%}) %> 
+    <% } %> 
+</div>
+ 
