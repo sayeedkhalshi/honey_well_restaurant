@@ -18,6 +18,42 @@ const ReservedDate = require("../../models/ReservedDate");
 const Reservation = require("../../models/Reservation");
 const Cancell = require("../../models/Cancell");
 
+//find reservation on user link clicked
+router.post("/users/customer/reservations", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        if (req.user.role === "admin") {
+            Reservation.find({ email: req.body.email }).then((reservations) => {
+                if (!reservations) {
+                    res.render("admin/users/single-user", { reservations });
+                }
+                if (reservations) {
+                    res.render("admin/users/single-user", { reservations });
+                }
+            });
+        } else {
+            res.send("Need to be a admin to access this page");
+        }
+    }
+});
+
+//GET user customer single
+router.get("/users/customer/reservations", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        if (req.user.role === "admin") {
+            Reservation.find({ email: req.body.email }).then((reservations) => {
+                if (!reservations) {
+                    res.render("admin/users/single-user", { reservations });
+                }
+                if (reservations) {
+                    res.render("admin/users/single-user", { reservations });
+                }
+            });
+        } else {
+            res.send("Need to be a admin to access this page");
+        }
+    }
+});
+
 //Served
 router.get("/served", ensureAuthenticated, (req, res) => {
     if (req.user) {

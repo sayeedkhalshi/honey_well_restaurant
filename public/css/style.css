@@ -214,3 +214,11 @@ input:focus {
     background: antiquewhite;
     margin: 8px 2px;
 }
+#register form,
+.login form {
+    border: 1px solid #ededed;
+    width: max-content;
+    margin: 10px auto;
+    padding: 20px;
+    box-shadow: inset 0px 0px 4px 7px #f4f5f7;
+}
