@@ -289,6 +289,55 @@ router.get("/users", ensureAuthenticated, (req, res) => {
         }
     }
 });
+
+//user admin section private only admin customers
+router.get("/users/customer", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        if (req.user.role === "admin") {
+            User.find({ role: "customer" }).then((users) => {
+                res.render("admin/users/customers", {
+                    layout: "layoutAdmin",
+                    users,
+                });
+            });
+        } else {
+            res.send("Need to be a admin to access this page");
+        }
+    }
+});
+
+//user admin section private only admin customers
+router.get("/users/admin", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        if (req.user.role === "admin") {
+            User.find({ role: "admin" }).then((users) => {
+                res.render("admin/users/admins", {
+                    layout: "layoutAdmin",
+                    users,
+                });
+            });
+        } else {
+            res.send("Need to be a admin to access this page");
+        }
+    }
+});
+//user admin section private only admin customers
+router.get("/users/employee", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        if (req.user.role === "admin") {
+            User.find({ role: "employee" }).then((users) => {
+                res.render("admin/users/employees", {
+                    layout: "layoutAdmin",
+                    users,
+                });
+            });
+        } else {
+            res.send("Need to be a admin to access this page");
+        }
+    }
+});
+
+//users POST private only admin
 router.post("/users", ensureAuthenticated, (req, res) => {
     if (req.user) {
         if (req.user.role === "admin") {
@@ -332,6 +381,28 @@ router.post("/users", ensureAuthenticated, (req, res) => {
         }
     }
 });
+
+//restaurant private for date hour and table
+router.get("/restaurant", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        if (req.user.role === "admin" || req.user.role === "employee") {
+            ReservedDate.find()
+                .then((reserveddates) => {
+                    const d = new Date();
+
+                    res.render("admin/date-admin", {
+                        reserveddates,
+                        d,
+                    });
+                })
+                .catch((err) => res.json({ msg: err }));
+        } else {
+            res.send("Need to be a admin to access this page");
+        }
+    }
+});
+
+//dates admin
 
 router.get("/date", ensureAuthenticated, (req, res) => {
     if (req.user) {
@@ -633,6 +704,19 @@ router.post("/hour", ensureAuthenticated, (req, res) => {
             }
         })
         .catch((err) => res.send("no user found"));
+});
+
+//reservations admin private only admin
+router.get("/reservations", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        if (req.user.role === "admin") {
+            Reservation.find().then((reservations) => {
+                res.render("admin/reservations/reservations", { reservations });
+            });
+        } else {
+            res.send("Need to be a admin to access this page");
+        }
+    }
 });
 
 module.exports = router;

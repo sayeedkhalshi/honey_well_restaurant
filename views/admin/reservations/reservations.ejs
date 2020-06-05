@@ -1,0 +1,44 @@
+<%- include("../partials/header") %>
+<div class="admin-reservations">
+
+<% if(typeof reservations != 'undefined'){ %>
+    <h2 class="dash-heading">Pending Reservations List</h2>
+    <% let counter = 1 %>
+    <ul class="field-name">
+        <li>#:</li>
+        <li>Reserved By:</li>
+        <li>Phone:</li>
+        <li>Email:</li>
+        <li>Date:</li>
+        <li>Hour:</li>
+        <li>Table:</li>
+        <li>Status:</li>
+
+    </ul>
+    <% reservations.forEach((reservation) => { %>
+        <% if(reservation.status == "served" || reservation.status == "cancelled"){ %>
+    
+        <ul class="res-dash">
+            <li><%= counter %></li>
+    
+            <li class="reservations-future"><a href="reservations/<%= reservation.combination %>"><%= reservation.name %></a></li>
+            <li class="reservations-future"><%= reservation.phone %></li>
+            <li class="reservations-future"><%= reservation.email %></li>
+            <li class="reservations-date">
+                <%= reservation.combination.split(" ")[0] %>
+            </li>
+            <li class="reservations-hour">
+                <%= reservation.combination.split(" ")[1] %>
+            </li>
+            <li class="reservations-table">
+                <%= reservation.combination.split(" ")[2] %>
+            </li>
+            <li class="reservations-future"><%= reservation.status %></li>
+            
+           
+            
+        </ul>
+    
+    <% } %>
+    <% counter = counter + 1 %> <%}) %> <%} %>
+</div>

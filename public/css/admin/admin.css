@@ -108,6 +108,12 @@ input {
 }
 
 /* admin user section */
+.customers ul {
+    display: grid;
+    grid-template-columns: 5% 20% 20% 20%;
+    border: 1px solid #999;
+}
+
 select {
     -webkit-appearance: none;
     -moz-appearance: none;

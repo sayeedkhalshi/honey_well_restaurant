@@ -1,0 +1,23 @@
+<%- include("../partials/header") %>
+<div class="user-btn">
+    <h4 class="admin-heading">FInd users by clicking the butons below</h4>
+    <a href="/admin/users/customer"><button>Customers</button></a>
+    <a href="/admin/users/employee"><button>Employee</button></a>
+    <a href="/admin/users/admin"><button>Admin</button></a>
+</div>
+    <!--Reservations for front end-->
+   <div class="customers">
+       <h3 class="admin-heading">Customer's List</h3>
+    <% if(typeof users != 'undefined'){ %> 
+        <% let counter = 1 %> 
+        <ul>
+        <% users.forEach((user) => { %>
+            <li class="admin-list">#: <%= counter %> </li>
+            <li class="admin-list">Name: <%= user.name %></li>
+            <li class="admin-list">Phone: <%= user.phone %></li>
+            <li class="admin-list">Email: <%= user.email %></li>
+            <% counter += 1 %> 
+        <%}) %>
+        </ul>
+    <%} %>
+</div>

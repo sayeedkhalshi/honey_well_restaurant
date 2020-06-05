@@ -33,7 +33,7 @@
     <ul class="res-dash">
         <li><%= counter %></li>
 
-        <a href="reservations/<%= reservation.combination %>"><li class="reservations-future"><%= reservation.name %></li></a>
+        <li class="reservations-future"><a href="reservations/<%= reservation.combination %>"><%= reservation.name %></a></li>
         <li class="reservations-future"><%= reservation.phone %></li>
         <li class="reservations-future"><%= reservation.email %></li>
         <li class="reservations-date">
@@ -46,8 +46,8 @@
             <%= reservation.combination.split(" ")[2] %>
         </li>
         <li class="reservations-future"><%= reservation.status %></li>
-        <li class="reservations-future"><form action="/admin/confirm" method="POST"><input name="confirmvalue" class="hide" hidden value="<%= reservation.combination %>" ><input class="confirm-btn" type="submit" value="Confirm" style="width: 70px"></form></li>
-        <li class="reservations-future"><form action="/admin/special" method="POST"><input name="specialvalue" class="hide" hidden value="<%= reservation.combination %>" ><input class="confirm-btn" type="submit" value="Mark Special" style="width: 70px"></form></li>
+        <li class="reservations-future"><form action="/admin/confirm" method="POST"><input name="confirmvalue" class="hide" hidden value="<%= reservation.combination %>" ><input class="confirm-btn" type="submit" value="Confirm?" style="width: 70px"></form></li>
+        <li class="reservations-future"><form action="/admin/special" method="POST"><input name="specialvalue" class="hide" hidden value="<%= reservation.combination %>" ><input class="confirm-btn" type="submit" value="Special?" style="width: 70px"></form></li>
         <li class="reservations-future"><form action="/admin/cancell" method="POST"><input name="cancellvalue" class="hide" hidden value="<%= reservation.combination %>" ><input class="confirm-btn" type="submit" value="Cancell?" style="width: 70px"></form></li>
     </ul>
 

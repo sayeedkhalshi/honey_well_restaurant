@@ -24,11 +24,11 @@
         </ul>
         <% reservations.forEach((reservation) => { %>
             <% if(reservation.status == "ongoing"){ %>
-        <a href="reservations/<%= reservation.combination %>">
+        
             <ul class="res-dash">
                 <li><%= counter %></li>
         
-                <li class="reservations-future"><%= reservation.name %></li>
+                <li class="reservations-future"><a href="reservations/<%= reservation.combination %>"><%= reservation.name %></a></li>
                 <li class="reservations-future"><%= reservation.phone %></li>
                 <li class="reservations-future"><%= reservation.email %></li>
                 <li class="reservations-future">
@@ -41,9 +41,9 @@
                     <%= reservation.combination.split(" ")[2] %>
                 </li>
                 <li class="reservations-future"><%= reservation.status %></li>
-                <li class="reservations-future"><form action="/admin/served" method="POST"><input name="servedvalue" class="hide" hidden value="<%= reservation.combination %>" ><input class="confirm-btn" type="submit" value="Mark Served" style="width: 70px"></button></li>
+                <li class="reservations-future"><form action="/admin/served" method="POST"><input name="servedvalue" class="hide" hidden value="<%= reservation.combination %>" ><input class="confirm-btn" type="submit" value="Served?" style="width: 70px"></button></li>
             </ul>
-        </a>
+        
         <% } %>
         <% counter = counter + 1 %> <%}) %> <%} %>
 </div>

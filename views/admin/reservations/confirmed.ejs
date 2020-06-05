@@ -28,7 +28,7 @@
             <ul class="res-dash">
                 <li><%= counter %></li>
         
-                <a href="reservations/<%= reservation.combination %>"><li class="reservations-future"><%= reservation.name %></li></a>
+               <li class="reservations-future"> <a href="reservations/<%= reservation.combination %>"><%= reservation.name %></a></li>
                 <li class="reservations-future"><%= reservation.phone %></li>
                 <li class="reservations-future"><%= reservation.email %></li>
                 <li class="reservations-future">
@@ -41,7 +41,7 @@
                     <%= reservation.combination.split(" ")[2] %>
                 </li>
                 <li class="reservations-future"><%= reservation.status %></li>
-                <li class="reservations-future"><form action="/admin/ongoing" method="POST"><input name="ongoingvalue" class="hide" hidden value="<%= reservation.combination %>" ><input class="confirm-btn" type="submit" value="Mark Ongoing" style="width: 70px"></form></li>
+                <li class="reservations-future"><form action="/admin/ongoing" method="POST"><input name="ongoingvalue" class="hide" hidden value="<%= reservation.combination %>" ><input class="confirm-btn" type="submit" value="Ongoing?" style="width: 70px"></form></li>
             </ul>
         
         <% } %>
