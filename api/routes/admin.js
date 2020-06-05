@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const passport = require("passport");
+const bcrypt = require("bcryptjs");
 
 const {
     ensureAuthenticated,
@@ -20,7 +21,7 @@ const Cancell = require("../../models/Cancell");
 //Served
 router.get("/served", ensureAuthenticated, (req, res) => {
     if (req.user) {
-        if (req.user.role === "admin") {
+        if (req.user.role === "admin" || req.user.role === "employee") {
             Reservation.find({ time: "future" }).then((reservations) => {
                 res.render("admin/reservations/served", {
                     layout: "layoutAdmin",
@@ -51,7 +52,7 @@ router.post("/served", ensureAuthenticated, (req, res) => {
 //cancell
 router.get("/cancelled", ensureAuthenticated, (req, res) => {
     if (req.user) {
-        if (req.user.role === "admin") {
+        if (req.user.role === "admin" || req.user.role === "employee") {
             Cancell.find().then((reservations) => {
                 res.render("admin/reservations/cancelled", {
                     layout: "layoutAdmin",
@@ -136,7 +137,7 @@ router.post("/special", ensureAuthenticated, (req, res) => {
 });
 router.get("/special", ensureAuthenticated, (req, res) => {
     if (req.user) {
-        if (req.user.role === "admin") {
+        if (req.user.role === "admin" || req.user.role === "employee") {
             Reservation.find({ time: "future" }).then((reservations) => {
                 res.render("admin/reservations/special", {
                     layout: "layoutAdmin",
@@ -152,7 +153,7 @@ router.get("/special", ensureAuthenticated, (req, res) => {
 //find reservations by id
 router.get("/reservations/:comb", ensureAuthenticated, (req, res) => {
     if (req.user) {
-        if (req.user.role === "admin") {
+        if (req.user.role === "admin" || req.user.role === "employee") {
             Reservation.find({ combination: req.params.comb })
                 .then((reservations) => {
                     res.render("admin/reservations/single", {
@@ -170,7 +171,7 @@ router.get("/reservations/:comb", ensureAuthenticated, (req, res) => {
 //ongoing reservation
 router.get("/ongoing", ensureAuthenticated, (req, res) => {
     if (req.user) {
-        if (req.user.role === "admin") {
+        if (req.user.role === "admin" || req.user.role === "employee") {
             Reservation.find({ time: "future" }).then((reservations) => {
                 res.render("admin/reservations/ongoing", {
                     layout: "layoutAdmin",
@@ -201,7 +202,7 @@ router.post("/ongoing", ensureAuthenticated, (req, res) => {
 //Pending reservation
 router.get("/pending", ensureAuthenticated, (req, res) => {
     if (req.user) {
-        if (req.user.role === "admin") {
+        if (req.user.role === "admin" || req.user.role === "employee") {
             Reservation.find({ time: "future" }).then((reservations) => {
                 res.render("admin/reservations/pending", {
                     layout: "layoutAdmin",
@@ -233,7 +234,7 @@ router.post("/confirm", ensureAuthenticated, (req, res) => {
 //Confirmed reservation
 router.get("/confirmed", ensureAuthenticated, (req, res) => {
     if (req.user) {
-        if (req.user.role === "admin") {
+        if (req.user.role === "admin" || req.user.role === "employee") {
             Reservation.find({ time: "future" }).then((reservations) => {
                 res.render("admin/reservations/confirmed", {
                     layout: "layoutAdmin",
@@ -249,7 +250,7 @@ router.get("/confirmed", ensureAuthenticated, (req, res) => {
 //Cancelled reservation
 router.get("/cancelled", ensureAuthenticated, (req, res) => {
     if (req.user) {
-        if (req.user.role === "admin") {
+        if (req.user.role === "admin" || req.user.role === "employee") {
             Reservation.find({ time: "future" }).then((reservations) => {
                 res.render("admin/reservations/cancelled", {
                     layout: "layoutAdmin",
@@ -262,11 +263,12 @@ router.get("/cancelled", ensureAuthenticated, (req, res) => {
     }
 });
 
+//dashboard
 router.get("/", ensureAuthenticated, (req, res) => {
     if (req.user) {
-        if (req.user.role === "admin") {
+        if (req.user.role === "admin" || req.user.role === "employee") {
             Reservation.find({ time: "future" }).then((reservations) => {
-                res.render("admin/dashboard", {
+                res.render("admin/reservations/pending", {
                     layout: "layoutAdmin",
                     reservations,
                 });
@@ -277,6 +279,7 @@ router.get("/", ensureAuthenticated, (req, res) => {
     }
 });
 
+//users
 router.get("/users", ensureAuthenticated, (req, res) => {
     if (req.user) {
         if (req.user.role === "admin") {
@@ -286,10 +289,53 @@ router.get("/users", ensureAuthenticated, (req, res) => {
         }
     }
 });
+router.post("/users", ensureAuthenticated, (req, res) => {
+    if (req.user) {
+        if (req.user.role === "admin") {
+            User.findOne({ email: req.body.email })
+                .then((user) => {
+                    if (user) {
+                        res.redirect("/admin/users");
+                    }
+                    if (!user) {
+                        if (req.body.password === req.body.password2) {
+                            const newUser = new User({
+                                name: req.body.name,
+                                email: req.body.email,
+                                phone: req.body.phone,
+                                role: req.body.role,
+                                password: req.body.password,
+                            });
+
+                            bcrypt.genSalt(10, (err, salt) => {
+                                bcrypt
+                                    .hash(req.body.password, salt)
+                                    .then((hash) => {
+                                        newUser.password = hash;
+
+                                        newUser
+                                            .save()
+                                            .then((user) => {
+                                                res.redirect("/admin/users");
+                                            })
+                                            .catch((err) => console.log(err));
+                                    });
+                            });
+                        } else {
+                            res.json({ msg: "password did not match" });
+                        }
+                    }
+                })
+                .catch((err) => console.log(err));
+        } else {
+            res.send("Need to be a admin to access this page");
+        }
+    }
+});
 
 router.get("/date", ensureAuthenticated, (req, res) => {
     if (req.user) {
-        if (req.user.role === "admin") {
+        if (req.user.role === "admin" || req.user.role === "employee") {
             ReservedDate.find()
                 .then((reserveddates) => {
                     const d = new Date();
@@ -418,7 +464,7 @@ router.post("/date", ensureAuthenticated, (req, res) => {
 
 router.get("/hours", (req, res) => {
     if (req.user) {
-        if (req.user.role === "admin") {
+        if (req.user.role === "admin" || req.user.role === "employee") {
             Hour.find().then((hours) => {
                 res.render("admin/hour-admin", { hours });
             });
@@ -430,7 +476,7 @@ router.get("/hours", (req, res) => {
 
 router.get("/offers", ensureAuthenticated, (req, res) => {
     if (req.user) {
-        if (req.user.role === "admin") {
+        if (req.user.role === "admin" || req.user.role === "employee") {
             res.render("admin/offers");
         } else {
             res.send("Need to be a admin to access this page");
@@ -441,7 +487,7 @@ router.get("/offers", ensureAuthenticated, (req, res) => {
 //@GET private admin
 router.get("/table", ensureAuthenticated, (req, res) => {
     if (req.user) {
-        if (req.user.role === "admin") {
+        if (req.user.role === "admin" || req.user.role === "employee") {
             Table.find().then((tables) => {
                 res.render("admin/table-admin", { tables });
             });

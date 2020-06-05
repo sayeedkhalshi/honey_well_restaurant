@@ -39,12 +39,28 @@ header {
 
 /* Start table admin section */
 .table-admin {
-    display: grid;
-    grid-template-columns: 50% 50%;
     text-align: center;
 }
 .table-admin input {
     width: 400px;
+}
+.table-list ul {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    list-style: none;
+}
+.table-list {
+    margin: 40px auto;
+    padding: 30px;
+}
+.table-list ul li {
+    margin: 2px;
+    padding: 10px;
+    border: 2px solid #62514d;
+    box-shadow: 2px 2px 2px #7d7d7d, inset 1px 1px 1px 1px #979292;
+}
+.field-name li {
+    background-color: #9f9f9f;
 }
 
 /* End table admin section */
@@ -89,4 +105,84 @@ input {
 }
 .btn button {
     cursor: pointer;
+}
+
+/* admin user section */
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='chocolate' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z' /><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position-x: 100%;
+    background-position-y: 0px;
+    padding: 5px;
+}
+
+input,
+select {
+    width: 300px;
+    margin: 20px auto;
+    text-align: center;
+    display: block;
+    background-color: #e8e7dd;
+    padding: 5px;
+    box-shadow: 0px 0px 3px 0px #999, inset 0 0 2px 0px #999;
+    border: 1px solid #999;
+}
+
+input[type="submit"] {
+    background-color: #402525;
+    padding: 10px;
+    color: #eee;
+    box-shadow: 0 0 1px 1px #333;
+    cursor: pointer;
+}
+.admin-heading {
+    background-color: #f8c17f;
+    width: max-content;
+    margin: 5px auto;
+    padding: 10px;
+    text-transform: uppercase;
+    box-shadow: inset 0px 0px 4px 1px #999;
+}
+
+.user-btn {
+    text-align: center;
+    margin: 30px 0 70px 0;
+}
+.btn .ongoing-btn,
+.user-btn button {
+    background-color: #402525;
+    padding: 10px;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    box-shadow: inset 0px 0px 26px 1px #442323;
+    cursor: pointer;
+    border: 2px solid #935e38;
+    font-weight: bold;
+    color: wheat;
+    border-radius: 6px;
+}
+
+/*date admin */
+.past-accepting-dates,
+.accepting-dates {
+    text-align: center;
+    margin: 20px;
+}
+
+/*hour admin */
+.hour-list {
+    text-align: center;
+    margin: 60px 0;
+}
+
+.admin-list {
+    background: #716c66;
+    width: max-content;
+    margin: 3px auto;
+    padding: 5px 15px;
+    color: #edeeee;
+    border-radius: 2px;
+    box-shadow: 1px 1px 1px 0px #333;
 }

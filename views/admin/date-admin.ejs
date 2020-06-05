@@ -1,10 +1,11 @@
 <%- include("./partials/header") %>
 <div class="date-admin">
     <form method="POST" action="/admin/date">
+        <h4 class="admin-heading">Add a date for you want to accept reservation</h4>
         <input type="date" name="opendate" />
         <input
             type="submit"
-            value="add a date you want to accept reservation"
+            value="add a date"
         />
 
 
@@ -12,7 +13,7 @@
 
 
     <div class="accepting-dates">
-        <h2>Accepting Dates</h2>
+        <h4 class="admin-heading">Accepting Dates</h4>
         
 
         <ul>
@@ -21,11 +22,11 @@
                     <% const reserveddate_array = reserveddate.opendate.split("-") %>
                     <% const year = reserveddate_array[0] %>
                     <% const month = reserveddate_array[1] %>
-                    <% const day = reserveddate_array[2] %>
+                    <% const day = reserveddate_array[4] %>
                     <% const dateboolean = (year < d.getFullYear()) || (year == d.getFullYear() && month < (d.getMonth() + 1)) || (year == d.getFullYear() && month == (d.getMonth() +1) && day < d.getDate()) %>
                     <% if (!dateboolean){ %>
                         
-                        <p><%= reserveddate.opendate %></p>
+                        <li class="admin-list"><%= reserveddate.opendate %></li>
                     <% } %>
                      
                 <% }) %> 
@@ -33,7 +34,7 @@
         </ul>
     </div>
     <div class="past-accepting-dates">
-        <h2>Past Dates</h2>
+        <h4 class="admin-heading">Past Dates</h4>
         <ul>
             <% if(typeof reserveddates != 'undefined'){ %> 
                 <% reserveddates.forEach((reserveddate) => { %>
@@ -46,7 +47,7 @@
                      
                     <% if(dateboolean){ %>
                         
-                        <p><%= reserveddate.opendate %></p>
+                        <li class="admin-list"><%= reserveddate.opendate %></li>
                     <% } %>
                 <% }) %> 
             <% } %>

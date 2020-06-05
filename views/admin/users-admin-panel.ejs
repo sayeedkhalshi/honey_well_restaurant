@@ -1,1 +1,27 @@
 <%- include("./partials/header") %>
+
+<div class="user-admin">
+
+    <div class="user-btn">
+        <h4 class="admin-heading">FInd users by clicking the butons below</h4>
+        <a href="/admin/users/customer"><button>Customers</button></a>
+        <a href="/admin/users/employee"><button>Employee</button></a>
+        <a href="/admin/users/admin"><button>Admin</button></a>
+    </div>
+
+    <form method="POST" action="/admin/users">
+        <h4 class="admin-heading">Create new admin or employee using the form below</h4>
+        <input type="text" name="name" placeholder="Name">
+        <input type="email" name="email" placeholder="Email">
+        <input type="phone" name="phone" placeholder="Phone">
+        <input type="password" name="password" placeholder="Password">
+        <input type="password" name="password2" placeholder="Password again">
+        <select name="role" required>
+            <option disabled selected>Choose User Type</option>
+            <option value="admin">Admin</option>
+            <option value="employee">Employee</option>
+            
+        </select>
+        <input type="submit" value="Create Admin/Employee">
+    </form>
+</div>

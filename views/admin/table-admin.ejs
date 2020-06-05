@@ -1,7 +1,7 @@
 <%- include("./partials/header") %>
 <div class="table-admin">
     <div class="new-table-form">
-        <h2>Add new table</h2>
+        <h4 class="admin-heading">Add new table</h4>
         <form
             id="new-table-form"
             action="/admin/table"
@@ -37,16 +37,23 @@
     </div>
 
     <div class="table-list">
+        <h4 class="admin-heading">List of table:</h4>
+        <ul class="field-name">
+            <li>Table Name: </li>
+            <li>Table Number: </li>
+            <li>Maximum Person: </li>
+            <li>Table image: </li>
+        </ul>
         <ul>
             <% if(typeof tables != 'undefined'){ %> 
                 <% tables.forEach((table) => { %>
                     
-                    <%= table.id %>
-                        <h2>Table Name: <%= table.tablename %></h2>
-                    </a>
-                    <h3>Table Number: <%= table.tablenumber %></h3>
-                    <p>Maximum Person: <%= table.tableperson %></p>
-                    <p>Table image:</p> <img src="/<%= table.tableimg %>" width="200">
+                    
+                        <li><%= table.tablename %></li>
+                    
+                    <li><%= table.tablenumber %></li>
+                    <li><%= table.tableperson %></li>
+                    <li><img src="/<%= table.tableimg %>" width="50"></li>
                 <% }) %> 
             <% } %>
         </ul>

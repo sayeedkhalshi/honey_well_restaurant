@@ -1,5 +1,6 @@
 <%- include("./partials/header") %>
 <div class="admin-hour">
+    <h4 class="admin-heading">Add a hour you want to accept reservation</h4>
     <form action="/admin/hour" method="POST">
         <select name="starthour">
             <option value="1">1</option>
@@ -19,7 +20,7 @@
             <option value="am">am</option>
             <option value="pm">pm</option>
         </select>
-        to
+        <p style="text-align: center;">to</p>
         <select name="endhour">
             <option value="1">1</option>
             <option value="2">2</option>
@@ -42,11 +43,12 @@
     </form>
 
     <div class="hour-list">
+        <h4 class="admin-heading">Accepting Hours: </h4>
         <ul>
             <% if(typeof hours != 'undefined'){ %> 
                 <% hours.forEach((hour) => { %>
                     
-                    <p><%= hour.openhour %></p>
+                    <li class="admin-list"><%= hour.openhour %></li>
                         
                     
                 <% }) %> 
