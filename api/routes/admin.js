@@ -719,12 +719,4 @@ router.get("/reservations", ensureAuthenticated, (req, res) => {
     }
 });
 
-// Logout
-router.get("/logout", (req, res) => {
-    req.logout();
-    req.session.destroy(() => {
-        res.redirect("/");
-    });
-});
-
 module.exports = router;
