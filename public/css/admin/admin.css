@@ -158,15 +158,15 @@ input[type="submit"] {
 }
 .btn .ongoing-btn,
 .user-btn button {
-    background-color: #402525;
+    background-color: #777575;
     padding: 10px;
-    font-size: 1.2em;
+    font-size: 0.8em;
     text-transform: uppercase;
-    box-shadow: inset 0px 0px 26px 1px #442323;
+    box-shadow: inset 0px 0px 26px 1px #4f4444;
     cursor: pointer;
-    border: 2px solid #935e38;
+    border: 2px solid #66564a;
     font-weight: bold;
-    color: wheat;
+    color: #d9d1c3;
     border-radius: 6px;
 }
 
