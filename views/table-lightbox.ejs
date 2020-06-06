@@ -1,0 +1,20 @@
+<%- include("./partials/header") %> 
+
+<div class="lightbox-wrapper">
+    <div class="lightbox">
+    <% if (tables != "undefined"){ %> 
+        <% tables.forEach(table=>{ %>
+            
+                <div class="table-img">
+                    <img src="/<%= table.tableimg %>" alt="<%= table.tablename %> " width="350">
+                    <h3> <span class="number"><%= table.tablenumber  %></span>, <%= table.tablename %><b>, Person:-</b> <%= table.tableperson  %>  </h3>
+                    
+        
+                </div>
+               
+            
+        <% }) %> 
+    <% } %> 
+    </div>
+
+</div>
