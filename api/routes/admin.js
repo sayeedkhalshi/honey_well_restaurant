@@ -443,7 +443,7 @@ router.get("/restaurant", ensureAuthenticated, (req, res) => {
 router.get("/date", ensureAuthenticated, (req, res) => {
     if (req.user) {
         if (req.user.role === "admin" || req.user.role === "employee") {
-            ReservedDate.find()
+            ReservedDate.find({ time: "future" })
                 .then((reserveddates) => {
                     const d = new Date();
 
