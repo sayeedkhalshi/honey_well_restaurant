@@ -233,3 +233,17 @@ input[type="submit"] {
     border-radius: 2px;
     box-shadow: 1px 1px 1px 0px #333;
 }
+
+/*reservations*/
+.admin-reservations .field-name,
+.admin-reservations .res-dash {
+    grid-template-columns: 5% 9% 8% 22% 9% 8% 5% 7%;
+}
+.confirmed .field-name,
+.confirmed .res-dash,
+.served .field-name,
+.served .res-dash,
+.ongoing .field-name,
+.ongoing .res-dash {
+    grid-template-columns: 5% 9% 8% 22% 9% 8% 5% 7% 7%;
+}
