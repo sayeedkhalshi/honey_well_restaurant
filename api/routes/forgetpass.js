@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
 
 //load model
 const User = require("../../models/User");
@@ -108,10 +109,43 @@ router.post("/", (req, res) => {
                             const forgot = forgetpass.forgot;
 
                             //nodemailer link creation and mail sending here
-                            res.render("forgetpass", {
-                                layout: "layout",
-                                forgot,
+                            const transporter = nodemailer.createTransport({
+                                service: "gmail",
+                                auth: {
+                                    user: "unsocialideabarking@gmail.com",
+                                    pass: "1990SuperCreative",
+                                },
                             });
+
+                            const body = {
+                                from: "unsocialideabarking@gmail.com", // sender address
+                                to: email, // list of receivers
+                                subject:
+                                    "Password reset link - HoneyWellRestaurant", // Subject line
+                                html:
+                                    "<h3>Click this link to reset password for</h3> <br> <h2>Honey Well Restaurant </h2> <br> <a href='/reset-link/" +
+                                    forgot +
+                                    "><h1>Reset Password</h2>",
+                            };
+
+                            transporter.sendMail(body, (err, result) => {
+                                if (err) {
+                                    errors.email = "didn't happen, try again";
+                                    res.render("forgetpass", {
+                                        layout: "layout",
+                                        errors,
+                                        email,
+                                    });
+                                }
+                                errors.email =
+                                    "A reset link has been sent to your email";
+                                res.render("resetmessage", {
+                                    layout: "layout",
+                                    errors,
+                                });
+                            });
+
+                            //end nodemailer code
                         });
                     });
                 });
