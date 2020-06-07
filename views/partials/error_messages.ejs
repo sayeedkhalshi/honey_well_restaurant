@@ -1,3 +1,14 @@
-<% if(typeof errors != 'undefined'){ %> <% errors.forEach((error) => { %>
-<p><%= error.msg %></p>
-<% }) %> <% } %>
+<% if(typeof errors != 'undefined'){ %> 
+    
+        <p class="error"><%= errors.email %></p>
+        <p class="error"><%= errors.name %></p>
+        <p class="error"><%= errors.phone %></p>
+        <p class="error"><%= errors.password %></p>
+        <p class="error"><%= errors.password2 %></p>
+
+
+     
+<% } %>
+<% if(typeof login_errors != 'undefined'){ %> 
+        <p class="error"><%= login_errors %></p>
+<% } %>

@@ -1,6 +1,7 @@
 <%- include("./partials/header") %>
-<div class="login">
+<div id="login">
     <form id="login-form" action="/user/login" method="POST">
+        <%- include("./partials/error_messages") %>
         <input
             type="email"
             name="email"

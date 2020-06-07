@@ -8,6 +8,9 @@ const {
     forwardAuthenticated,
 } = require("../../config/auth");
 
+//load validation
+const validateRegisterInput = require("../../validation/register");
+
 //load User model
 const User = require("../../models/User");
 const Reservation = require("../../models/Reservation");
@@ -37,25 +40,49 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
 });
 
 //GET public login
-router.get("/login", forwardAuthenticated, (req, res) => res.render("login"));
+router.get("/login", forwardAuthenticated, (req, res) => {
+    res.render("login", {
+        layout: "layout",
+        login_errors: req.session.messages || [],
+    });
+    req.session.messages = [];
+});
 
 //GET public register
 router.get("/register", forwardAuthenticated, (req, res) =>
-    res.render("register")
+    res.render("register", { layout: "layout" })
 );
 
 //GET public register
-router.get("/register", forwardAuthenticated, (req, res) =>
-    res.render("register")
-);
+router.get("/register", forwardAuthenticated, (req, res) => {
+    res.render("register");
+});
 
 //POST Register Public
 router.post("/register", (req, res) => {
-    const errors = [];
+    const { name, phone, email, password, password2 } = req.body;
+    const { errors, isValid } = validateRegisterInput(req.body);
+
+    if (!isValid) {
+        res.render("register", {
+            layout: "layout",
+            errors,
+            name,
+            phone,
+            email,
+            password,
+            password2,
+        });
+    }
+
     User.findOne({ email: req.body.email }).then((user) => {
         if (user) {
-            errors.push({
-                msg: "Username Or Email Already Exist. Try Login instead",
+            errors.email = "Email already exists. Try login instead";
+            res.render("login", {
+                layout: "layout",
+                errors,
+                email,
+                password,
             });
         } else {
             if (req.body.password == req.body.password2) {
@@ -73,7 +100,13 @@ router.post("/register", (req, res) => {
                         newUser
                             .save()
                             .then((user) => {
-                                res.redirect("/user/login");
+                                errors.email = "Registered | You can login now";
+                                res.render("login", {
+                                    layout: "layout",
+                                    errors,
+                                    email,
+                                    password,
+                                });
                             })
                             .catch((err) => {
                                 res.status(400);
@@ -81,7 +114,7 @@ router.post("/register", (req, res) => {
                     });
                 });
             } else {
-                errors.push({ msg: "Password doesn't match" });
+                errors.password = "Password doesn't match";
             }
         }
     });
@@ -91,8 +124,8 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res, next) => {
     passport.authenticate("local", {
         successRedirect: req.session.returnTo || "/",
-        failureRedirect: "/login",
-        failureFlash: true,
+        failureRedirect: "/user/login",
+        failureMessage: "Invalid username or password",
     })(req, res, next);
     delete req.session.returnTo;
 });
