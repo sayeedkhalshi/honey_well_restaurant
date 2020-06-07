@@ -1,0 +1,9 @@
+<%- include("./partials/header") %>
+
+<div id="forgetpass">
+    <form action="/forget-password" method="POST">
+        <%- include("./partials/error_messages") %>
+        <input type="email" name="email" placeholder="Email for the account" value="<%= typeof email != 'undefined' ? email : '' %>">
+        <input type="submit" value="Reset password">
+    </form>
+</div>

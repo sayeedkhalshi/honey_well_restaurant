@@ -17,6 +17,7 @@ const index = require("./api/routes/index");
 const user = require("./api/routes/user");
 const reservations = require("./api/routes/reservations");
 const admin = require("./api/routes/admin");
+const forgerPass = require("./api/routes/forgetpass");
 
 //db config
 db = require("./config/keys").mongoURI;
@@ -64,6 +65,7 @@ app.use("/", index);
 app.use("/user", user);
 app.use("/reservations", reservations);
 app.use("/admin", admin);
+app.use("/forget-password", forgerPass);
 
 //port
 const PORT = process.env.PORT || 4999;

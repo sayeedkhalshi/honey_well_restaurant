@@ -45,7 +45,6 @@ router.get("/login", forwardAuthenticated, (req, res) => {
         layout: "layout",
         login_errors: req.session.messages || [],
     });
-    req.session.messages = [];
 });
 
 //GET public register
