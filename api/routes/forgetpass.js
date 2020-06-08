@@ -114,7 +114,7 @@ router.post("/", (req, res) => {
                                 service: "gmail",
                                 auth: {
                                     user: "unsocialideabarking@gmail.com",
-                                    pass: "1990SuperCreative",
+                                    pass: "none",
                                 },
                             });
 
