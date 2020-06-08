@@ -3,9 +3,14 @@
 <div id="forgetpass">
     <form action="/forget-password/reset-link" method="POST">
         <%- include("./partials/error_messages") %>
-        <input name="forgot" type="hidden" value="<%= typeof forgot != 'undefined' ? forgot : '' %>">
+        <input id="forgot" name="forgot" type="hidden" value="">
         <input type="password" name="password" placeholder="New password" value="<%= typeof password != 'undefined' ? password : '' %>">
         <input type="password" name="password2" placeholder="New password again" value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
         <input type="submit" value="Set new password">
     </form>
 </div>
+
+<script>
+    let forgot = document.getElementById("forgot");
+    forgot.value = window.location.href.split("/")[5];
+</script>

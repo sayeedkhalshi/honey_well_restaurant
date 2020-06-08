@@ -14,6 +14,7 @@ router.get("/reset-link/:hash", (req, res) => {
 
 router.post("/reset-link", (req, res) => {
     const errors = {};
+
     ForgetPass.findOne({ forgot: req.body.forgot }).then((forgetpass) => {
         if (forgetpass) {
             User.findOne({ email: forgetpass.email }).then((user) => {
@@ -123,13 +124,15 @@ router.post("/", (req, res) => {
                                 subject:
                                     "Password reset link - HoneyWellRestaurant", // Subject line
                                 html:
-                                    "<h3>Click this link to reset password for</h3> <br> <h2>Honey Well Restaurant </h2> <br> <a href='/reset-link/" +
+                                    "<h3>Link Expires in 2 hours</h3> <br> <h2>Honey Well Restaurant </h2> <br> <a href='http://localhost:4999/forget-password/reset-link/" +
                                     forgot +
-                                    "><h1>Reset Password</h2>",
+                                    "'>" +
+                                    "<h2>Reset Password</h2></a>",
                             };
 
                             transporter.sendMail(body, (err, result) => {
                                 if (err) {
+                                    console.log(err);
                                     errors.email = "didn't happen, try again";
                                     res.render("forgetpass", {
                                         layout: "layout",
@@ -137,12 +140,14 @@ router.post("/", (req, res) => {
                                         email,
                                     });
                                 }
-                                errors.email =
-                                    "A reset link has been sent to your email";
-                                res.render("resetmessage", {
-                                    layout: "layout",
-                                    errors,
-                                });
+                                if (!err) {
+                                    errors.email =
+                                        "A reset link has been sent to your email";
+                                    res.render("resetmessage", {
+                                        layout: "layout",
+                                        errors,
+                                    });
+                                }
                             });
 
                             //end nodemailer code
