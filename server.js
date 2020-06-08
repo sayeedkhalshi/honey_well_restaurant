@@ -67,6 +67,12 @@ app.use("/reservations", reservations);
 app.use("/admin", admin);
 app.use("/forget-password", forgerPass);
 
+//start 404
+app.get("*", function (req, res) {
+    res.status(404).send("what???");
+});
+//404 ends
+
 //port
 const PORT = process.env.PORT || 4999;
 
