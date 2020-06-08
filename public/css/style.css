@@ -310,3 +310,6 @@ input:focus {
     padding: 20px;
     box-shadow: inset 0px 0px 4px 7px #f4f5f7;
 }
+#all-content {
+    min-width: 1200px;
+}

@@ -11,6 +11,7 @@
 
     <form method="POST" action="/admin/users">
         <h4 class="admin-heading">Create new admin or employee using the form below</h4>
+        <%- include("./partials/errormessage") %>
         <input type="text" name="name" placeholder="Name">
         <input type="email" name="email" placeholder="Email">
         <input type="phone" name="phone" placeholder="Phone">

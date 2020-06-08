@@ -375,12 +375,29 @@ router.get("/users/employee", ensureAuthenticated, (req, res) => {
 
 //users POST private only admin
 router.post("/users", ensureAuthenticated, (req, res) => {
+    const success = {};
+    const errors = {};
     if (req.user) {
         if (req.user.role === "admin") {
             User.findOne({ email: req.body.email })
                 .then((user) => {
                     if (user) {
-                        res.redirect("/admin/users");
+                        if (user.role == req.body.role) {
+                            errors.msg = "User already exist";
+                            res.render("admin/users-admin-panel", { errors });
+                        }
+                        if (user.role != req.body.role) {
+                            User.findByIdAndUpdate(
+                                user.id,
+                                { role: req.body.role },
+                                { new: true }
+                            ).then((users) => {
+                                success.msg = "User role updated";
+                                res.render("admin/users-admin-panel", {
+                                    success,
+                                });
+                            });
+                        }
                     }
                     if (!user) {
                         if (req.body.password === req.body.password2) {
@@ -401,13 +418,19 @@ router.post("/users", ensureAuthenticated, (req, res) => {
                                         newUser
                                             .save()
                                             .then((user) => {
-                                                res.redirect("/admin/users");
+                                                success.msg =
+                                                    "New user created";
+                                                res.render(
+                                                    "admin/users-admin-panel",
+                                                    { success }
+                                                );
                                             })
                                             .catch((err) => console.log(err));
                                     });
                             });
                         } else {
-                            res.json({ msg: "password did not match" });
+                            errors.msg = "Password doesn't match";
+                            res.render("admin/users-admin-panel", { errors });
                         }
                     }
                 })
@@ -460,6 +483,8 @@ router.get("/date", ensureAuthenticated, (req, res) => {
 });
 
 router.post("/date", ensureAuthenticated, (req, res) => {
+    const success = {};
+    const errors = {};
     User.findOne({ email: req.user.email }).then((user) => {
         if (user.role === "admin" || user.role === "employee") {
             //mark time as past in ReservedDate model
@@ -485,7 +510,7 @@ router.post("/date", ensureAuthenticated, (req, res) => {
                             { new: true }
                         )
                             .then((reserveddate) => {
-                                console.log(reserveddate + " updated");
+                                success.msg = "New date added";
                             })
                             .catch((err) => console.log(err));
                     }
@@ -531,7 +556,18 @@ router.post("/date", ensureAuthenticated, (req, res) => {
                 opendate: req.body.opendate,
             }).then((reserveddate) => {
                 if (reserveddate) {
-                    res.json({ msg: "Date already exists" });
+                    errors.msg = "Date already exists";
+                    ReservedDate.find({ time: "future" })
+                        .then((reserveddates) => {
+                            const d = new Date();
+
+                            res.render("admin/date-admin", {
+                                reserveddates,
+                                d,
+                                errors,
+                            });
+                        })
+                        .catch((err) => res.json({ msg: err }));
                 }
                 if (!reserveddate) {
                     const d = new Date();
@@ -548,7 +584,18 @@ router.post("/date", ensureAuthenticated, (req, res) => {
                             day < d.getDate());
 
                     if (dateboolean) {
-                        res.json({ msg: "You can't have a day in the past" });
+                        errors.msg = "You can't have a day in the past";
+                        ReservedDate.find({ time: "future" })
+                            .then((reserveddates) => {
+                                const d = new Date();
+
+                                res.render("admin/date-admin", {
+                                    reserveddates,
+                                    d,
+                                    errors,
+                                });
+                            })
+                            .catch((err) => res.json({ msg: err }));
                     }
                     if (!dateboolean) {
                         const NewReservedDate = new ReservedDate({
@@ -557,10 +604,25 @@ router.post("/date", ensureAuthenticated, (req, res) => {
                         });
                         NewReservedDate.save()
                             .then((reserveddate) => {
-                                res.json({ msg: reserveddate });
+                                success.msg =
+                                    "New date added to the reservation form";
+                                ReservedDate.find({ time: "future" })
+                                    .then((reserveddates) => {
+                                        const d = new Date();
+
+                                        res.render("admin/date-admin", {
+                                            reserveddates,
+                                            d,
+                                            success,
+                                            errors,
+                                        });
+                                    })
+                                    .catch((err) =>
+                                        res.redirect("/admin/date")
+                                    );
                             })
                             .catch((err) => {
-                                res.json({ msg: err });
+                                res.redirect("/admin/date");
                             });
                     }
                 }
@@ -579,6 +641,58 @@ router.get("/hours", (req, res) => {
             res.send("Need to be a admin to access this page");
         }
     }
+});
+
+//@POST private admin hour add
+router.post("/hour", ensureAuthenticated, (req, res) => {
+    const success = {};
+    const errrors = {};
+    User.findOne({ email: req.user.email })
+        .then((user) => {
+            if (user) {
+                if (user.role === "admin" || user.role === "employee") {
+                    const openhour =
+                        req.body.starthour +
+                        req.body.startmeridiem +
+                        "-" +
+                        req.body.endhour +
+                        req.body.endmeridiem;
+                    Hour.findOne({ openhour: openhour }).then((hour) => {
+                        if (hour) {
+                            errors.msg = "Hour already exists";
+                            Hour.find().then((hours) => {
+                                res.render("admin/hour-admin", {
+                                    hours,
+                                    errors,
+                                });
+                            });
+                        }
+                        if (!hour) {
+                            const newHour = new Hour({
+                                openhour: openhour,
+                                user: req.user.id,
+                            });
+                            newHour
+                                .save()
+                                .then((hours) => {
+                                    success.msg =
+                                        "Hour added to reservation form";
+                                    Hour.find().then((hours) => {
+                                        res.render("admin/hour-admin", {
+                                            hours,
+                                            success,
+                                        });
+                                    });
+                                })
+                                .catch((err) => res.json({ err: err }));
+                        }
+                    });
+                } else {
+                    res.send("You need to be admin or employee to access this");
+                }
+            }
+        })
+        .catch((err) => res.send("no user found"));
 });
 
 router.get("/offers", ensureAuthenticated, (req, res) => {
@@ -606,6 +720,8 @@ router.get("/table", ensureAuthenticated, (req, res) => {
 
 //@POST private admin new table
 router.post("/table", ensureAuthenticated, (req, res) => {
+    const errors = {};
+    const success = {};
     User.findOne({ email: req.user.email })
         .then((user) => {
             if (user) {
@@ -613,8 +729,12 @@ router.post("/table", ensureAuthenticated, (req, res) => {
                     Table.findOne({ tablenumber: req.body.tablenumber }).then(
                         (tables) => {
                             if (tables) {
-                                res.json({
-                                    msg: "table number already exists",
+                                errors.msg = "Table number already exists";
+                                Table.find().then((tables) => {
+                                    res.render("admin/table-admin", {
+                                        tables,
+                                        errors,
+                                    });
                                 });
                             } else {
                                 //starts image upload
@@ -660,6 +780,14 @@ router.post("/table", ensureAuthenticated, (req, res) => {
                                         return cb(null, true);
                                     } else {
                                         cb("Error: Images Only!");
+                                        errors.msg =
+                                            "Image couldn't found or selected";
+                                        Table.find().then((tables) => {
+                                            res.render("admin/table-admin", {
+                                                tables,
+                                                errors,
+                                            });
+                                        });
                                     }
                                 }
 
@@ -669,8 +797,12 @@ router.post("/table", ensureAuthenticated, (req, res) => {
                                         res.json({ msg: err });
                                     } else {
                                         if (req.file == undefined) {
-                                            res.json({
-                                                msg: "Error: No File Selected!",
+                                            errors.msg = "Image couldn't found";
+                                            Table.find().then((tables) => {
+                                                res.render(
+                                                    "admin/table-admin",
+                                                    { tables, errors }
+                                                );
                                             });
                                         } else {
                                             const newTable = new Table({
@@ -686,10 +818,33 @@ router.post("/table", ensureAuthenticated, (req, res) => {
                                             newTable
                                                 .save()
                                                 .then((tables) => {
-                                                    res.json({ res: tables });
+                                                    success.msg = "Table added";
+                                                    Table.find().then(
+                                                        (tables) => {
+                                                            res.render(
+                                                                "admin/table-admin",
+                                                                {
+                                                                    tables,
+                                                                    success,
+                                                                }
+                                                            );
+                                                        }
+                                                    );
                                                 })
                                                 .catch((err) => {
-                                                    res.json({ msg: err });
+                                                    errors.msg =
+                                                        "Table couldn't add";
+                                                    Table.find().then(
+                                                        (tables) => {
+                                                            res.render(
+                                                                "admin/table-admin",
+                                                                {
+                                                                    tables,
+                                                                    errors,
+                                                                }
+                                                            );
+                                                        }
+                                                    );
                                                 });
                                         }
                                     }
@@ -697,43 +852,6 @@ router.post("/table", ensureAuthenticated, (req, res) => {
                             }
                         }
                     );
-                } else {
-                    res.send("You need to be admin or employee to access this");
-                }
-            }
-        })
-        .catch((err) => res.send("no user found"));
-});
-
-//@POST private admin hour add
-router.post("/hour", ensureAuthenticated, (req, res) => {
-    User.findOne({ email: req.user.email })
-        .then((user) => {
-            if (user) {
-                if (user.role === "admin" || user.role === "employee") {
-                    const openhour =
-                        req.body.starthour +
-                        req.body.startmeridiem +
-                        "-" +
-                        req.body.endhour +
-                        req.body.endmeridiem;
-                    Hour.findOne({ openhour: openhour }).then((hour) => {
-                        if (hour) {
-                            res.json({ msg: "Hour already exist" });
-                        }
-                        if (!hour) {
-                            const newHour = new Hour({
-                                openhour: openhour,
-                                user: req.user.id,
-                            });
-                            newHour
-                                .save()
-                                .then((hours) => {
-                                    res.redirect("/admin/hours");
-                                })
-                                .catch((err) => res.json({ err: err }));
-                        }
-                    });
                 } else {
                     res.send("You need to be admin or employee to access this");
                 }

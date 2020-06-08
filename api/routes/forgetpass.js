@@ -126,7 +126,7 @@ router.post("/", (req, res) => {
                                 html:
                                     "<h3>Link Expires in 2 hours</h3> <br> <h2>Honey Well Restaurant </h2> <br> <a href='http://honeywellrestaurant.abusayeed.me/forget-password/reset-link/" +
                                     forgot +
-                                    "'>" +
+                                    "' >" +
                                     "<h2>Reset Password</h2></a>",
                             };
 

@@ -3,6 +3,10 @@ const Table = require("../../models/Table");
 const Reservation = require("../../models/Reservation");
 const router = express.Router();
 
+router.get("/succes-page", (req, res) => {
+    res.render("success");
+});
+
 router.get("/tables", (req, res) => {
     Table.find().then((tables) => {
         res.render("table-lightbox", { layout: "layout", tables });

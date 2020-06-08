@@ -9,6 +9,7 @@
 
 <div class="date-admin">
     <form method="POST" action="/admin/date">
+        <%- include("./partials/errormessage") %>
         <h4 class="admin-heading">Add a date for you want to accept reservation</h4>
         <input type="date" name="opendate" />
         <input

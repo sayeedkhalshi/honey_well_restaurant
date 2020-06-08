@@ -9,6 +9,7 @@
 <div class="admin-hour">
     <h4 class="admin-heading">Add a hour you want to accept reservation</h4>
     <form action="/admin/hour" method="POST">
+        <%- include("./partials/errormessage") %>
         <select name="starthour">
             <option value="1">1</option>
             <option value="2">2</option>

@@ -247,3 +247,15 @@ input[type="submit"] {
 .ongoing .res-dash {
     grid-template-columns: 5% 9% 8% 22% 9% 8% 5% 7% 7%;
 }
+
+/*error success */
+.error,
+.success {
+    text-align: center;
+    margin: 10px;
+    color: brown;
+    font-family: "kanit";
+}
+.success {
+    color: green;
+}

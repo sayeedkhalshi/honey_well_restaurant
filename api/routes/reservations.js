@@ -19,35 +19,37 @@ router.post("/", (req, res) => {
 
     //search for the combination if exists
     Reservation.findOne({ combination: combination }).then((combinations) => {
+        const success = {};
+        const errors = {};
         if (combinations) {
-            res.json({ msg: "already reserved" });
+            errors.msg =
+                "Already someone reserved this table in this time of the day. Please check what is not already reserved.";
+            res.render("success", { errors });
         }
         if (!combinations) {
             ReservedDate.findOne({ opendate: dateData[1] }).then(
                 (reserveddates) => {
                     if (!reserveddates) {
-                        res.json({
-                            msg:
-                                "This date is not allowed by the restaurant to reserve",
-                        });
+                        errors.msg =
+                            "This date is not allowed by the restaurant to reserve.";
+                        res.render("success", { errors });
                     }
                     if (reserveddates) {
                         Hour.findOne({ openhour: hourData[1] }).then(
                             (hours) => {
                                 if (!hours) {
-                                    res.json({
-                                        msg:
-                                            "This hour is not allowed by the restaurant to reserve",
-                                    });
+                                    errors.msg =
+                                        "This hour is not allowed by the restaurant to reserve";
+                                    res.render("success", { errors });
                                 }
                                 if (hours) {
                                     Table.findOne({
                                         tablenumber: tableData[1],
                                     }).then((tables) => {
                                         if (!tables) {
-                                            res.json({
-                                                msg: "This table doesn't exist",
-                                            });
+                                            errors.msg =
+                                                "This table doesn't exist";
+                                            res.render("success", { errors });
                                         }
                                         if (tables) {
                                             let newReservation;
@@ -102,8 +104,10 @@ router.post("/", (req, res) => {
                                             newReservation
                                                 .save()
                                                 .then((reservation) => {
-                                                    res.json({
-                                                        msg: reservation,
+                                                    success.msg =
+                                                        "Thanks for reservaing the table. One of our employee will call you to confirm your reservation";
+                                                    res.render("success", {
+                                                        success,
                                                     });
                                                 })
                                                 .catch((err) => {
