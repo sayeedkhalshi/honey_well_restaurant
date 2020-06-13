@@ -265,6 +265,16 @@ input:focus {
     color: brown;
     font-family: "kanit";
 }
+footer {
+    background-color: #c19c6d;
+    padding: 40px;
+    text-align: center;
+    color: #f2f0eb;
+    box-shadow: 0 0 9px 1px #333;
+}
+footer p {
+    color: #401d16;
+}
 
 /*register */
 #forgetpass select,

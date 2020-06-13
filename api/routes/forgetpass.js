@@ -9,7 +9,7 @@ const ForgetPass = require("../../models/ForgetPass");
 
 //@GET authorized reset link
 router.get("/reset-link/:hash", (req, res) => {
-    res.render("authorized-link", { layout: "layout" });
+    res.render("authorizedlink", { layout: "layout" });
 });
 
 router.post("/reset-link", (req, res) => {
@@ -49,6 +49,7 @@ router.post("/reset-link", (req, res) => {
                             });
                         }
                         if (req.body.password.length > 5) {
+                            console.log(req.body.password.length);
                             bcrypt.genSalt(10, (err, salt) => {
                                 bcrypt.hash(
                                     req.body.password,
@@ -114,7 +115,7 @@ router.post("/", (req, res) => {
                                 service: "gmail",
                                 auth: {
                                     user: "unsocialideabarking@gmail.com",
-                                    pass: "none",
+                                    pass: "1990SuperCreative",
                                 },
                             });
 
@@ -140,7 +141,7 @@ router.post("/", (req, res) => {
                                         email,
                                     });
                                 }
-                                if (!err) {
+                                if (result) {
                                     errors.email =
                                         "A reset link has been sent to your email";
                                     res.render("resetmessage", {
